@@ -128,7 +128,7 @@ body {
 #playback-controls {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     padding-bottom: 5px;
@@ -136,58 +136,54 @@ body {
 
 #previous-button,
 #next-button {
-    position: relative;
-    width: 72px;
-    height: 16px;
+    display: flex;
+    align-items: center;
+    height: 22px;
     cursor: pointer;
+
+    .bar {
+        width: 4px;
+        height: 22px;
+        background: $fg;
+    }
 }
 
-#previous-button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 8px 22px 8px 0;
-    border-color: transparent $fg transparent transparent;
+#previous-button {
+    .bar {
+        margin-right: 1px;
+        transform: translateX(2px);
+    }
+
+    .triangle {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 11px 22px 11px 0;
+        border-color: transparent $fg transparent transparent;
+    }
+
+    .triangle:first-of-type {
+        transform: translateX(2px);
+    }
 }
 
-#previous-button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 2px;
-    background: $fg;
-}
+#next-button {
+    .bar {
+        margin-left: 1px;
+        transform: translateX(-2px);
+    }
 
-#next-button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 2px;
-    background: $fg;
-}
+    .triangle {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 11px 0 11px 22px;
+        border-color: transparent transparent transparent $fg;
+    }
 
-#next-button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 8px 0 8px 22px;
-    border-color: transparent transparent transparent $fg;
+    .triangle:last-of-type {
+        transform: translateX(-2px);
+    }
 }
 
 #play-button {
