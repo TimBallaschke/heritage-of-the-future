@@ -145,6 +145,7 @@ body {
   font-size: 8rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
+  font-weight: 400;
   padding-top: 10px;
 }
 
@@ -271,6 +272,7 @@ body {
   font-size: 8rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
+  font-weight: 400;
 }
 #language-switcher::before, #language-switcher::after {
   content: "";
@@ -283,17 +285,14 @@ body {
 
 #artwork-number-wrapper {
   position: fixed;
-  top: 30rem;
-  left: 50rem;
-  transform: rotate(-20deg);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40rem;
-  height: 40rem;
+  width: 35rem;
+  height: 35rem;
   border: 3px solid #000000;
   border-radius: 50%;
-  font-size: 25rem;
+  font-size: 22rem;
 }
 
 @font-face {

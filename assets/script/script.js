@@ -380,6 +380,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }, SLIDE_DURATION);
     };
 
+    // --- Scale transition for the artwork number ---
+    const SCALE_DURATION = 400;
+
+    const scaleTransition = (wrapperEl, contentEl, newContent, props) => {
+        if (!wrapperEl || !contentEl) return;
+        const currentRot = wrapperEl.dataset.rotation !== undefined ? wrapperEl.dataset.rotation : 0;
+
+        wrapperEl.style.transition = `transform ${SCALE_DURATION}ms ease`;
+        wrapperEl.style.transform = `rotate(${currentRot}deg) scale(0.5)`;
+
+        setTimeout(() => {
+            contentEl.textContent = newContent;
+            if (props.x !== undefined) wrapperEl.style.left = `${props.x}rem`;
+            if (props.y !== undefined) wrapperEl.style.top = `${props.y}dvh`;
+
+            wrapperEl.style.transition = 'none';
+            wrapperEl.style.transform = `rotate(${props.rotation}deg) scale(0.5)`;
+            wrapperEl.dataset.rotation = props.rotation;
+
+            void wrapperEl.offsetHeight;
+
+            wrapperEl.style.transition = `transform ${SCALE_DURATION}ms ease`;
+            wrapperEl.style.transform = `rotate(${props.rotation}deg) scale(1)`;
+        }, SCALE_DURATION);
+    };
+
     // --- Translation + track navigation system ---
     let data = null;
     let activeLang = null;
@@ -409,13 +435,12 @@ document.addEventListener('DOMContentLoaded', () => {
             background.transitionTo(track.image);
         }
 
-        if (artworkNumberEl && track.number !== undefined) {
-            artworkNumberEl.textContent = track.number;
-        }
-        if (artworkNumberWrapperEl) {
-            if (track.x !== undefined) artworkNumberWrapperEl.style.left = `${track.x}rem`;
-            if (track.y !== undefined) artworkNumberWrapperEl.style.top = `${track.y}rem`;
-            if (track.rotation !== undefined) artworkNumberWrapperEl.style.transform = `rotate(${track.rotation}deg)`;
+        if (artworkNumberWrapperEl && artworkNumberEl && track.number !== undefined) {
+            scaleTransition(artworkNumberWrapperEl, artworkNumberEl, track.number, {
+                x: track.x,
+                y: track.y,
+                rotation: track.rotation ?? 0,
+            });
         }
 
         if (playButton) playButton.classList.remove('playing');

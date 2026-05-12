@@ -9,7 +9,7 @@
             "id": "space-of-collective-memory",
             "number": 1,
             "x": 55,
-            "y": 25,
+            "y": 14,
             "rotation": -32,
             "image": "assets/images/image-1.png",
             "translations": {
@@ -34,7 +34,7 @@
             "id": "road-to-hell",
             "number": 2,
             "x": 10,
-            "y": 85,
+            "y": 48,
             "rotation": 18,
             "image": "assets/images/image-2.png",
             "translations": {
@@ -108,9 +108,9 @@
         {
             "id": "here-elsewhere",
             "number": 5,
-            "x": 60,
-            "y": 80,
-            "rotation": -24,
+            "x": 12,
+            "y": 13,
+            "rotation": 14,
             "image": "assets/images/image-5.png",
             "translations": {
                 "en": {
