@@ -194,11 +194,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const prefetchAllAudio = () => {
+        if (!data || !data.tracks) return;
+        const urls = new Set();
+        data.tracks.forEach(track => {
+            Object.values(track.translations).forEach(t => {
+                if (t.audioSrc) urls.add(t.audioSrc);
+            });
+        });
+        urls.forEach(url => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'audio';
+            link.href = url;
+            document.head.appendChild(link);
+        });
+    };
+
     fetch('assets/data/translations.json')
         .then(r => r.json())
         .then(loaded => {
             data = loaded;
             apply(0, 'en');
+            prefetchAllAudio();
         })
         .catch(err => console.error('Failed to load translations:', err));
 
