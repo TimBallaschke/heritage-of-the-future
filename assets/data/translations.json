@@ -7,6 +7,9 @@
     "tracks": [
         {
             "id": "space-of-collective-memory",
+            "number": 1,
+            "x": 55,
+            "y": 25,
             "image": "assets/images/image-1.png",
             "translations": {
                 "en": {
@@ -28,6 +31,9 @@
         },
         {
             "id": "road-to-hell",
+            "number": 2,
+            "x": 10,
+            "y": 85,
             "image": "assets/images/image-2.png",
             "translations": {
                 "en": {
@@ -49,6 +55,9 @@
         },
         {
             "id": "shifting-sands",
+            "number": 3,
+            "x": 20,
+            "y": 50,
             "image": "assets/images/image-3.png",
             "translations": {
                 "en": {
@@ -70,6 +79,9 @@
         },
         {
             "id": "gader-haya",
+            "number": 4,
+            "x": 70,
+            "y": 20,
             "image": "assets/images/image-4.png",
             "translations": {
                 "en": {
@@ -91,6 +103,9 @@
         },
         {
             "id": "here-elsewhere",
+            "number": 5,
+            "x": 40,
+            "y": 75,
             "image": "assets/images/image-5.png",
             "translations": {
                 "en": {
