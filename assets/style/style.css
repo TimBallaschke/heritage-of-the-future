@@ -1,0 +1,260 @@
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1vw;
+  overscroll-behavior: none;
+  height: 100dvh;
+  overflow: hidden;
+  touch-action: none;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+  scrollbar-width: none; /* Firefox */
+  -moz-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none; /* Disable iOS long-press callout */
+}
+
+body {
+  margin: 0;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #ffffff;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 4rem;
+}
+
+#artists-names-wrapper {
+  flex: 0 0 auto;
+  font-size: 12rem;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+#navigation-wrapper {
+  flex: 0 0 auto;
+}
+#navigation-wrapper #navigation {
+  display: flex;
+  flex-direction: column;
+}
+#navigation-wrapper #navigation > * {
+  flex: 0 0 auto;
+}
+
+#artwork-name-wrapper {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#artwork-name {
+  text-align: center;
+  font-size: 12rem;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+#selector-line-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+#selector-line {
+  width: 2px;
+  height: 30px;
+  background: #000000;
+}
+
+#seekbar-time-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
+#seekbar-progress {
+  width: 100%;
+  height: 2px;
+  background: #000000;
+}
+
+#seekbar-times {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 8rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  padding-top: 10px;
+}
+
+#playback-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 5px;
+}
+
+#previous-button,
+#next-button {
+  position: relative;
+  width: 20rem;
+  height: 16px;
+  cursor: pointer;
+}
+
+#previous-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 22px 8px 0;
+  border-color: transparent #000000 transparent transparent;
+}
+
+#previous-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 2px;
+  background: #000000;
+}
+
+#next-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 2px;
+  background: #000000;
+}
+
+#next-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 0 8px 22px;
+  border-color: transparent transparent transparent #000000;
+}
+
+#play-button {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+}
+#play-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-45%, -50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 22px 0 22px 46px;
+  border-color: transparent transparent transparent #000000;
+}
+#play-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-48%, -50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 19px 0 19px 39px;
+  border-color: transparent transparent transparent #ffffff;
+}
+#play-button.playing::before {
+  border: 2px solid #000000;
+  background: transparent;
+  width: 11px;
+  height: 44px;
+  transform: translate(calc(-50% - 11px), -50%);
+}
+#play-button.playing::after {
+  border: 2px solid #000000;
+  background: transparent;
+  width: 11px;
+  height: 44px;
+  transform: translate(calc(-50% + 11px), -50%);
+}
+
+#language-switcher {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  touch-action: pan-x;
+  font-size: 8rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+#language-switcher::before, #language-switcher::after {
+  content: "";
+  flex: 0 0 50%;
+}
+#language-switcher > div {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+}
+
+@font-face {
+  font-family: "Noto Sans Hebrew";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/noto-sans-hebrew.woff2") format("woff2");
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Noto Sans Arabic";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  font-display: swap;
+  src: url("../fonts/noto-sans-arabic.woff2") format("woff2");
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+body {
+  font-family: "Noto Sans Hebrew", "Noto Sans Arabic", "helvetica-neue-lt-pro", Helvetica, Arial, sans-serif;
+  color: #000000;
+}/*# sourceMappingURL=style.css.map */
