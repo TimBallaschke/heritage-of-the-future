@@ -1,23 +1,109 @@
 {
-    "en": {
-        "lang": "en",
-        "dir": "ltr",
-        "artistName": "Sharon<br>Golan",
-        "artworkName": "Space<br>of Collective<br>Memory",
-        "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    "languages": {
+        "en": { "lang": "en", "dir": "ltr" },
+        "ar": { "lang": "ar", "dir": "rtl" },
+        "he": { "lang": "he", "dir": "rtl" }
     },
-    "ar": {
-        "lang": "ar",
-        "dir": "rtl",
-        "artistName": "شارون<br>غولان",
-        "artworkName": "فضاء<br>الذاكرة<br>الجماعية",
-        "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-    },
-    "he": {
-        "lang": "he",
-        "dir": "rtl",
-        "artistName": "שרון<br>גולן",
-        "artworkName": "מרחב<br>הזיכרון<br>הקולקטיבי",
-        "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-    }
+    "tracks": [
+        {
+            "id": "space-of-collective-memory",
+            "translations": {
+                "en": {
+                    "artistName": "Sharon<br>Golan",
+                    "artworkName": "Space<br>of Collective<br>Memory",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+                },
+                "ar": {
+                    "artistName": "شارون<br>غولان",
+                    "artworkName": "فضاء<br>الذاكرة<br>الجماعية",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+                },
+                "he": {
+                    "artistName": "שרון<br>גולן",
+                    "artworkName": "מרחב<br>הזיכרון<br>הקולקטיבי",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+                }
+            }
+        },
+        {
+            "id": "road-to-hell",
+            "translations": {
+                "en": {
+                    "artistName": "Or<br>Aleksandrowicz",
+                    "artworkName": "The Road to Hell<br>Is Intentionally<br>Paved",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+                },
+                "ar": {
+                    "artistName": "أور<br>ألكسندروفيتش",
+                    "artworkName": "الطريق إلى الجحيم<br>مُعبَّد<br>عن سابق قصد",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+                },
+                "he": {
+                    "artistName": "אור<br>אלכסנדרוביץ'",
+                    "artworkName": "הדרך לגיהינום<br>מרוצפת בכוונה<br>תחילה",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
+                }
+            }
+        },
+        {
+            "id": "shifting-sands",
+            "translations": {
+                "en": {
+                    "artistName": "Lou<br>Moria",
+                    "artworkName": "Shifting<br>Sands",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3"
+                },
+                "ar": {
+                    "artistName": "لو<br>موريا",
+                    "artworkName": "رمالٌ<br>متحوّلة",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+                },
+                "he": {
+                    "artistName": "לו<br>מוריה",
+                    "artworkName": "לפני שהאדמה<br>מתחלפת",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
+                }
+            }
+        },
+        {
+            "id": "gader-haya",
+            "translations": {
+                "en": {
+                    "artistName": "Yael<br>Moria",
+                    "artworkName": "Gader Haya<br>– Hedge",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
+                },
+                "ar": {
+                    "artistName": "ياعيل<br>موريا",
+                    "artworkName": "سياج<br>حيّ",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3"
+                },
+                "he": {
+                    "artistName": "יעל<br>מוריה",
+                    "artworkName": "גדר<br>חיה",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3"
+                }
+            }
+        },
+        {
+            "id": "here-elsewhere",
+            "translations": {
+                "en": {
+                    "artistName": "Vika Libman,<br>Yuval Avraham",
+                    "artworkName": "Here,<br>Elsewhere",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3"
+                },
+                "ar": {
+                    "artistName": "فيكا ليبمان،<br>يوفال أبراهام",
+                    "artworkName": "هنا،<br>في مكان آخر",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3"
+                },
+                "he": {
+                    "artistName": "ויקה ליבמן,<br>יובל אברהם",
+                    "artworkName": "שם כמו<br>כאן",
+                    "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3"
+                }
+            }
+        }
+    ]
 }
