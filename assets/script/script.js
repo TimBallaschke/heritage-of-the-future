@@ -171,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const upload = (tex, source) => {
             gl.bindTexture(gl.TEXTURE_2D, tex);
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, source);
+            gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
         };
 
         // Build a blurred displacement texture from a source image
@@ -179,7 +180,12 @@ document.addEventListener('DOMContentLoaded', () => {
             upload(texDisp, img);
         });
 
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
         const render = (progress) => {
+            gl.clearColor(0, 0, 0, 0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
             gl.activeTexture(gl.TEXTURE0);
             gl.bindTexture(gl.TEXTURE_2D, texFrom);
             gl.activeTexture(gl.TEXTURE1);
@@ -409,6 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (artworkNumberWrapperEl) {
             if (track.x !== undefined) artworkNumberWrapperEl.style.left = `${track.x}rem`;
             if (track.y !== undefined) artworkNumberWrapperEl.style.top = `${track.y}rem`;
+            if (track.rotation !== undefined) artworkNumberWrapperEl.style.transform = `rotate(${track.rotation}deg)`;
         }
 
         if (playButton) playButton.classList.remove('playing');

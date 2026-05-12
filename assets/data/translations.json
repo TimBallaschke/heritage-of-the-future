@@ -10,6 +10,7 @@
             "number": 1,
             "x": 55,
             "y": 25,
+            "rotation": -32,
             "image": "assets/images/image-1.png",
             "translations": {
                 "en": {
@@ -34,6 +35,7 @@
             "number": 2,
             "x": 10,
             "y": 85,
+            "rotation": 18,
             "image": "assets/images/image-2.png",
             "translations": {
                 "en": {
@@ -56,8 +58,9 @@
         {
             "id": "shifting-sands",
             "number": 3,
-            "x": 20,
-            "y": 50,
+            "x": 10,
+            "y": 20,
+            "rotation": -7,
             "image": "assets/images/image-3.png",
             "translations": {
                 "en": {
@@ -82,6 +85,7 @@
             "number": 4,
             "x": 70,
             "y": 20,
+            "rotation": 41,
             "image": "assets/images/image-4.png",
             "translations": {
                 "en": {
@@ -104,8 +108,9 @@
         {
             "id": "here-elsewhere",
             "number": 5,
-            "x": 40,
-            "y": 75,
+            "x": 60,
+            "y": 80,
+            "rotation": -24,
             "image": "assets/images/image-5.png",
             "translations": {
                 "en": {
