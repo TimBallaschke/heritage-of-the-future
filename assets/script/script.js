@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const switcher = document.getElementById('language-switcher');
     const artistsEl = document.getElementById('artists-names');
     const artworkEl = document.getElementById('artwork-name');
+    const backgroundImg = document.getElementById('background-image');
     const playButton = document.getElementById('play-button');
     const audio = document.getElementById('audio');
     const progressBar = document.getElementById('seekbar-progress');
@@ -105,13 +106,36 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBar.addEventListener('pointercancel', endDrag);
     }
 
+    // --- Slide transition for titles ---
+    const SLIDE_DURATION = 400;
+
+    const slideTransition = (el, newHTML, direction = 'next') => {
+        if (!el) return;
+        const outX = direction === 'next' ? -100 : 100;
+        const inX = direction === 'next' ? 100 : -100;
+
+        el.style.transition = `transform ${SLIDE_DURATION}ms ease`;
+        el.style.transform = `translateX(${outX}vw)`;
+
+        setTimeout(() => {
+            el.innerHTML = newHTML;
+            el.style.transition = 'none';
+            el.style.transform = `translateX(${inX}vw)`;
+
+            void el.offsetHeight;
+
+            el.style.transition = `transform ${SLIDE_DURATION}ms ease`;
+            el.style.transform = 'translateX(0)';
+        }, SLIDE_DURATION);
+    };
+
     // --- Translation + track navigation system ---
     let data = null;
     let activeLang = null;
     let activeTrackIndex = 0;
     let applying = false;
 
-    const apply = (trackIndex, lang) => {
+    const apply = (trackIndex, lang, direction = 'next') => {
         if (!data || !data.languages[lang] || !data.tracks[trackIndex]) return;
         const track = data.tracks[trackIndex];
         const t = track.translations[lang];
@@ -130,12 +154,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        if (backgroundImg && track.image && backgroundImg.getAttribute('src') !== track.image) {
+            backgroundImg.src = track.image;
+        }
+
         if (playButton) playButton.classList.remove('playing');
         if (progressFill) progressFill.style.width = '0%';
         if (currentTimeEl) currentTimeEl.textContent = '0:00';
 
-        if (artistsEl) artistsEl.innerHTML = t.artistName;
-        if (artworkEl) artworkEl.innerHTML = t.artworkName;
+        slideTransition(artistsEl, t.artistName, direction);
+        setTimeout(() => slideTransition(artworkEl, t.artworkName, direction), 120);
 
         const langMeta = data.languages[lang];
         document.documentElement.lang = langMeta.lang;
@@ -182,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         prevButton.addEventListener('click', () => {
             if (!data || data.tracks.length === 0) return;
             const newIndex = (activeTrackIndex - 1 + data.tracks.length) % data.tracks.length;
-            apply(newIndex, activeLang);
+            apply(newIndex, activeLang, 'prev');
         });
     }
 
@@ -190,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nextButton.addEventListener('click', () => {
             if (!data || data.tracks.length === 0) return;
             const newIndex = (activeTrackIndex + 1) % data.tracks.length;
-            apply(newIndex, activeLang);
+            apply(newIndex, activeLang, 'next');
         });
     }
 

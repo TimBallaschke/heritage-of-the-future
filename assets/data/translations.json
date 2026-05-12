@@ -7,6 +7,7 @@
     "tracks": [
         {
             "id": "space-of-collective-memory",
+            "image": "assets/images/image-1.png",
             "translations": {
                 "en": {
                     "artistName": "Sharon<br>Golan",
@@ -27,6 +28,7 @@
         },
         {
             "id": "road-to-hell",
+            "image": "assets/images/image-2.png",
             "translations": {
                 "en": {
                     "artistName": "Or<br>Aleksandrowicz",
@@ -47,6 +49,7 @@
         },
         {
             "id": "shifting-sands",
+            "image": "assets/images/image-3.png",
             "translations": {
                 "en": {
                     "artistName": "Lou<br>Moria",
@@ -67,6 +70,7 @@
         },
         {
             "id": "gader-haya",
+            "image": "assets/images/image-4.png",
             "translations": {
                 "en": {
                     "artistName": "Yael<br>Moria",
@@ -87,6 +91,7 @@
         },
         {
             "id": "here-elsewhere",
+            "image": "assets/images/image-5.png",
             "translations": {
                 "en": {
                     "artistName": "Vika Libman,<br>Yuval Avraham",
