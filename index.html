@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/style/style.css">
+    <style>
+        .outer-circle, .inner-circle {
+            transform-origin: 300px 300px;
+            transition: transform 0.8s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <svg viewBox="-70 -70 740 740" style="width: 100vw; height: 100vw; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);" class="circle-names">
+        <defs>
+            <path id="circlePath"
+                d="M 300,300 m 0,-320 a 320,320 0 1,1 0,640 a 320,320 0 1,1 0,-640"
+                fill="none" />
+            <path id="innerCirclePath"
+                d="M 300,300 m 0,-285 a 285,285 0 1,1 0,570 a 285,285 0 1,1 0,-570"
+                fill="none" />
+        </defs>
+        <g class="outer-circle">
+            <text id="nameText" font-family="Helvetica, Arial, sans-serif" font-size="25">
+                <textPath href="#circlePath">ANNA&#160;MÜLLER&#x2003;&#x2003;&#x2003;BEN&#160;FISCHER&#x2003;&#x2003;&#x2003;CLARA&#160;WEBER&#x2003;&#x2003;&#x2003;DAVID&#160;SCHMIDT&#x2003;&#x2003;&#x2003;EVA&#160;HOFFMANN&#x2003;&#x2003;&#x2003;FELIX&#160;WAGNER&#x2003;&#x2003;&#x2003;GRETA&#160;BAUER&#x2003;&#x2003;&#x2003;HUGO&#160;KLEIN&#x2003;&#x2003;&#x2003;IDA&#160;BRAUN</textPath>
+            </text>
+        </g>
+        <g class="inner-circle">
+            <text id="artworkText" font-family="Helvetica, Arial, sans-serif" font-size="25">
+                <textPath href="#innerCirclePath">SUNSET&#160;DREAMS&#x2003;&#x2003;&#x2003;SILENT&#160;ECHO&#x2003;&#x2003;&#x2003;BROKEN&#160;LIGHT&#x2003;&#x2003;&#x2003;URBAN&#160;BLOOM&#x2003;&#x2003;&#x2003;FADING&#160;MEMORY&#x2003;&#x2003;&#x2003;GOLDEN&#160;THREAD&#x2003;&#x2003;&#x2003;STILL&#160;WATERS&#x2003;&#x2003;&#x2003;HOLLOW&#160;GROUND&#x2003;&#x2003;&#x2003;OPEN&#160;PASSAGE</textPath>
+            </text>
+        </g>
+    </svg>
+    <script>
+        const outerCircle = document.querySelector('.outer-circle');
+        const innerCircle = document.querySelector('.inner-circle');
+        const nameText = document.getElementById('nameText');
+        const artworkText = document.getElementById('artworkText');
+        const cx = 300, cy = 300;
+        const separator = '\u2003\u2003\u2003';
+
+        function measureAngles(textEl, nameList) {
+            const angles = [];
+            let charIndex = 0;
+            for (let i = 0; i < nameList.length; i++) {
+                const firstChar = charIndex;
+                const lastChar = charIndex + nameList[i].length - 1;
+                const posStart = textEl.getStartPositionOfChar(firstChar);
+                const posEnd = textEl.getEndPositionOfChar(lastChar);
+                const midX = (posStart.x + posEnd.x) / 2;
+                const midY = (posStart.y + posEnd.y) / 2;
+                const angle = Math.atan2(midY - cy, midX - cx) * (180 / Math.PI) + 90;
+                angles.push(angle);
+                charIndex += nameList[i].length;
+                if (i < nameList.length - 1) charIndex += separator.length;
+            }
+            return angles;
+        }
+
+        const outerNames = ['ANNA\u00A0MÜLLER', 'BEN\u00A0FISCHER', 'CLARA\u00A0WEBER', 'DAVID\u00A0SCHMIDT', 'EVA\u00A0HOFFMANN', 'FELIX\u00A0WAGNER', 'GRETA\u00A0BAUER', 'HUGO\u00A0KLEIN', 'IDA\u00A0BRAUN'];
+        const innerNames = ['SUNSET\u00A0DREAMS', 'SILENT\u00A0ECHO', 'BROKEN\u00A0LIGHT', 'URBAN\u00A0BLOOM', 'FADING\u00A0MEMORY', 'GOLDEN\u00A0THREAD', 'STILL\u00A0WATERS', 'HOLLOW\u00A0GROUND', 'OPEN\u00A0PASSAGE'];
+
+        const outerAngles = measureAngles(nameText, outerNames);
+        const innerAngles = measureAngles(artworkText, innerNames);
+
+        // Sync: outer[0] pairs with inner[8], outer[1] with inner[7], etc.
+        let step = 0;
+        let direction = 1; // 1 = forward, -1 = backward
+        const maxStep = outerNames.length - 1;
+
+        function update() {
+            const innerIdx = maxStep - step;
+            outerCircle.style.transform = `rotate(${-outerAngles[step]}deg)`;
+            innerCircle.style.transform = `rotate(${-innerAngles[innerIdx]}deg)`;
+        }
+
+        document.addEventListener('click', () => {
+            if (step >= maxStep) direction = -1;
+            if (step <= 0) direction = 1;
+            step += direction;
+            update();
+        });
+    </script>
+</body>
+</html>
