@@ -1,0 +1,23 @@
+{
+    "en": {
+        "lang": "en",
+        "dir": "ltr",
+        "artistName": "Sharon<br>Golan",
+        "artworkName": "Space<br>of Collective<br>Memory",
+        "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    },
+    "ar": {
+        "lang": "ar",
+        "dir": "rtl",
+        "artistName": "شارون<br>غولان",
+        "artworkName": "فضاء<br>الذاكرة<br>الجماعية",
+        "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+    },
+    "he": {
+        "lang": "he",
+        "dir": "rtl",
+        "artistName": "שרון<br>גולן",
+        "artworkName": "מרחב<br>הזיכרון<br>הקולקטיבי",
+        "audioSrc": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+    }
+}

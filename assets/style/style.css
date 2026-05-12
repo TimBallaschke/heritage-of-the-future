@@ -115,8 +115,8 @@ body {
   content: "";
   position: absolute;
   top: 50%;
-  right: 0;
-  transform: translate(50%, -50%);
+  inset-inline-end: -8px;
+  transform: translateY(-50%);
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -140,6 +140,7 @@ body {
   align-items: center;
   width: 100%;
   padding-bottom: 5px;
+  direction: ltr;
 }
 
 #previous-button,
@@ -204,6 +205,9 @@ body {
   height: 56px;
   cursor: pointer;
 }
+[dir=rtl] #play-button {
+  transform: scaleX(-1);
+}
 #play-button::before {
   content: "";
   position: absolute;
@@ -242,7 +246,8 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12rem;
+  direction: ltr;
+  gap: 20rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -250,6 +255,8 @@ body {
   font-size: 8rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
+  mask-image: linear-gradient(to right, transparent 0, black 20rem, black calc(100% - 20rem), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 20rem, black calc(100% - 20rem), transparent 100%);
 }
 #language-switcher::before, #language-switcher::after {
   content: "";
