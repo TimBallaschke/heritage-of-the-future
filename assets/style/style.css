@@ -152,7 +152,7 @@ body {
 #playback-controls {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
   padding-bottom: 5px;
@@ -162,57 +162,59 @@ body {
 #previous-button,
 #next-button {
   position: relative;
-  width: 72px;
-  height: 16px;
+  width: 53px;
+  height: 32px;
   cursor: pointer;
 }
 
-#previous-button::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 8px 22px 8px 0;
-  border-color: transparent #000000 transparent transparent;
+#previous-button {
+  border-left: 3px solid #000000;
 }
 
+#previous-button::before,
 #previous-button::after {
   content: "";
   position: absolute;
   top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 3px;
-  background: #000000;
-}
-
-#next-button::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 3px;
-  background: #000000;
-}
-
-#next-button::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 0;
   transform: translateY(-50%);
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 8px 0 8px 22px;
+  border-width: 16px 27px 16px 0;
+  border-color: transparent #000000 transparent transparent;
+}
+
+#previous-button::before {
+  left: -2px;
+}
+
+#previous-button::after {
+  left: 23px;
+}
+
+#next-button {
+  border-right: 3px solid #000000;
+}
+
+#next-button::before,
+#next-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 16px 0 16px 27px;
   border-color: transparent transparent transparent #000000;
+}
+
+#next-button::before {
+  right: 23px;
+}
+
+#next-button::after {
+  right: -2px;
 }
 
 #play-button {
