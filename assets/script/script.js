@@ -323,7 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const seekFromPointer = e => {
             const rect = progressBar.getBoundingClientRect();
             const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
-            const pct = rect.width > 0 ? x / rect.width : 0;
+            let pct = rect.width > 0 ? x / rect.width : 0;
+            if (document.documentElement.dir === 'rtl') pct = 1 - pct;
 
             if (progressFill) progressFill.style.width = `${pct * 100}%`;
 
