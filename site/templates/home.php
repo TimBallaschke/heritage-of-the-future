@@ -1,5 +1,63 @@
+<?php
+$languages = [];
+foreach (kirby()->languages() as $lang) {
+    $languages[$lang->code()] = [
+        'lang' => $lang->code(),
+        'dir'  => $lang->direction(),
+    ];
+}
+
+$rooms = [];
+foreach ($page->children()->listed() as $room) {
+    $roomTrans = [];
+    foreach (kirby()->languages() as $lang) {
+        $roomTrans[$lang->code()] = [
+            'name' => (string)$room->content($lang->code())->title(),
+        ];
+    }
+
+    $tracks = [];
+    foreach ($room->children()->listed()->sortBy('number', 'asc') as $artwork) {
+        $artTrans = [];
+        foreach (kirby()->languages() as $lang) {
+            $c = $artwork->content($lang->code());
+            $artTrans[$lang->code()] = [
+                'artistName'  => (string)$c->artist_name(),
+                'artworkName' => (string)$c->artwork_title(),
+                'audioSrc'    => url((string)$c->audio_path()),
+            ];
+        }
+        $tracks[] = [
+            'id'           => $artwork->slug(),
+            'number'       => (int)$artwork->number()->toInt(),
+            'image'        => url((string)$artwork->image_path()),
+            'translations' => $artTrans,
+        ];
+    }
+
+    $rooms[] = [
+        'id'           => $room->slug(),
+        'number'       => $room->num() ?? (count($rooms) + 1),
+        'translations' => $roomTrans,
+        'tracks'       => $tracks,
+    ];
+}
+
+$pageData = [
+    'languages' => $languages,
+    'rooms'     => $rooms,
+];
+
+$firstRoom = $rooms[0] ?? null;
+$firstTrack = $firstRoom['tracks'][0] ?? null;
+$currentLang = kirby()->language() ? kirby()->language()->code() : kirby()->defaultLanguage()->code();
+$currentDir  = kirby()->language() ? kirby()->language()->direction() : 'ltr';
+$initialArtist  = $firstTrack['translations'][$currentLang]['artistName']  ?? '';
+$initialArtwork = $firstTrack['translations'][$currentLang]['artworkName'] ?? '';
+$initialNumber  = $firstTrack['number'] ?? 1;
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= $currentLang ?>" dir="<?= $currentDir ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,22 +70,22 @@
     <div id="content">
         <div id="room-switcher-wrapper">
             <div id="room-switcher">
-                <div data-room="1">Room 1</div>
-                <div data-room="2">Room 2</div>
-                <div data-room="3">Room 3</div>
+                <?php foreach ($rooms as $r): ?>
+                    <div data-room="<?= esc($r['number']) ?>"><?= esc($r['translations'][$currentLang]['name'] ?? '') ?></div>
+                <?php endforeach ?>
             </div>
         </div>
         <div id="room-selector-line-wrapper">
             <div id="room-selector-line"></div>
         </div>
         <div id="artists-names-wrapper">
-            <div id="artists-names">Sharon<br>Golan</div>
+            <div id="artists-names"><?= $initialArtist ?></div>
         </div>
         <div id="artwork-name-wrapper">
             <div id="artwork-number-wrapper">
-                <div id="artwork-number">1</div>
+                <div id="artwork-number"><?= esc($initialNumber) ?></div>
             </div>
-            <div id="artwork-name">Space<br>of Collective<br>Memory</div>
+            <div id="artwork-name"><?= $initialArtwork ?></div>
         </div>
         <div id="navigation-wrapper">
             <div id="navigation">
@@ -60,7 +118,8 @@
             </div>
         </div>
     </div>
-    <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto">
+    <audio id="audio" preload="auto"></audio>
+    <script type="application/json" id="page-data"><?= json_encode($pageData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
     <script src="<?= url('assets/script/script.js') ?>"></script>
 </body>
 </html>

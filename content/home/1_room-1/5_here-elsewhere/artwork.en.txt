@@ -1,0 +1,25 @@
+Title: Here, Elsewhere
+
+----
+
+Number: 5
+
+----
+
+Image-path: assets/images/image-5.png
+
+----
+
+Artist-name: Vika Libman,<br>Yuval Avraham
+
+----
+
+Artwork-title: Here,<br>Elsewhere
+
+----
+
+Audio-path: assets/audio/voice-13.mp3
+
+----
+
+Uuid: bsqijfg5wle9fkgc

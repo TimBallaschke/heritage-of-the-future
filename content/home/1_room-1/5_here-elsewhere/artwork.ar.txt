@@ -1,0 +1,11 @@
+Title: هنا، في مكان آخر
+----
+Number: 5
+----
+Image_path: assets/images/image-5.png
+----
+Artist_name: فيكا ليبمان،<br>يوفال أبراهام
+----
+Artwork_title: هنا،<br>في مكان آخر
+----
+Audio_path: assets/audio/voice-14.mp3

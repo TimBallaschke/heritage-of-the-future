@@ -1,0 +1,9 @@
+title: Room
+
+sections:
+  artworks:
+    type: pages
+    label: Artworks
+    template: artwork
+    info: "#{{ page.number }} — {{ page.artist_name }}"
+    sortBy: number asc

@@ -1,0 +1,11 @@
+Title: גדר חיה
+----
+Number: 4
+----
+Image_path: assets/images/image-4.png
+----
+Artist_name: יעל<br>מוריה
+----
+Artwork_title: גדר<br>חיה
+----
+Audio_path: assets/audio/voice-12.mp3

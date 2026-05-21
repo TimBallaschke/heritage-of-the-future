@@ -1,0 +1,9 @@
+title: Home
+
+sections:
+  rooms:
+    type: pages
+    label: Rooms
+    template: room
+    info: "{{ page.artworks.toPages.count }} artworks"
+    sortBy: num asc

@@ -1,0 +1,11 @@
+Title: Space of Collective Memory
+----
+Number: 1
+----
+Image_path: assets/images/image-1.png
+----
+Artist_name: Sharon<br>Golan
+----
+Artwork_title: Space<br>of Collective<br>Memory
+----
+Audio_path: assets/audio/voice-01.mp3

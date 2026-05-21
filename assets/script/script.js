@@ -526,14 +526,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    fetch('assets/data/translations.json')
-        .then(r => r.json())
-        .then(loaded => {
-            data = loaded;
-            apply(0, 'en');
-            prefetchAllAudio();
-        })
-        .catch(err => console.error('Failed to load translations:', err));
+    const loadInlineData = () => {
+        const node = document.getElementById('page-data');
+        if (!node) return null;
+        try {
+            const parsed = JSON.parse(node.textContent);
+            const roomIdx = 0;
+            const room = parsed.rooms && parsed.rooms[roomIdx];
+            if (!room) return null;
+            return {
+                languages: parsed.languages,
+                rooms: parsed.rooms,
+                tracks: room.tracks,
+            };
+        } catch (err) {
+            console.error('Failed to parse inline page data:', err);
+            return null;
+        }
+    };
+
+    const inline = loadInlineData();
+    if (inline) {
+        data = inline;
+        apply(0, document.documentElement.lang || 'en');
+        prefetchAllAudio();
+    }
 
     // --- Initial centering of default language (English) ---
     const defaultLang = document.getElementById('language-switcher-english');

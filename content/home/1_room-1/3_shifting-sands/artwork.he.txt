@@ -1,0 +1,11 @@
+Title: לפני שהאדמה מתחלפת
+----
+Number: 3
+----
+Image_path: assets/images/image-3.png
+----
+Artist_name: לו<br>מוריה
+----
+Artwork_title: לפני שהאדמה<br>מתחלפת
+----
+Audio_path: assets/audio/voice-09.mp3
