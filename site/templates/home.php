@@ -13,6 +13,16 @@
         <div id="artwork-number-wrapper">
             <div id="artwork-number">1</div>
         </div>
+        <div id="room-switcher-wrapper">
+            <div id="room-switcher">
+                <div data-room="1">Room 1</div>
+                <div data-room="2">Room 2</div>
+                <div data-room="3">Room 3</div>
+            </div>
+        </div>
+        <div id="room-selector-line-wrapper">
+            <div id="room-selector-line"></div>
+        </div>
         <div id="artists-names-wrapper">
             <div id="artists-names">Sharon<br>Golan</div>
         </div>

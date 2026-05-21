@@ -85,7 +85,8 @@ body {
     letter-spacing: $letter-spacing-1;
 }
 
-#selector-line-wrapper {
+#selector-line-wrapper,
+#room-selector-line-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -93,7 +94,8 @@ body {
     height: 50px;
 }
 
-#selector-line {
+#selector-line,
+#room-selector-line {
     width: 3px;
     height: 30px;
     background: $color-2;
@@ -268,7 +270,8 @@ body {
     }
 }
 
-#language-switcher {
+#language-switcher,
+#room-switcher {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -294,6 +297,10 @@ body {
         flex: 0 0 auto;
         scroll-snap-align: center;
     }
+}
+
+#room-switcher-wrapper {
+    flex: 0 0 auto;
 }
 
 #artwork-number-wrapper {
