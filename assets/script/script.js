@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             uniform float u_intensity2;
             uniform float u_angle1;
             uniform float u_angle2;
+            uniform vec3 u_tint;
             varying vec2 v_uv;
 
             vec2 coverUV(vec2 uv, vec2 imgSize, vec2 canvasSize) {
@@ -101,7 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 vec4 t2 = texture2D(u_to, pos2);
 
                 float threshold = fbm(v_uv * 4.0);
-                gl_FragColor = step(threshold, u_progress) > 0.5 ? t2 : t1;
+                vec4 chosen = step(threshold, u_progress) > 0.5 ? t2 : t1;
+                gl_FragColor = vec4(u_tint * chosen.a, chosen.a);
             }
         `;
 
@@ -140,10 +142,13 @@ document.addEventListener('DOMContentLoaded', () => {
             intensity2: gl.getUniformLocation(program, 'u_intensity2'),
             angle1: gl.getUniformLocation(program, 'u_angle1'),
             angle2: gl.getUniformLocation(program, 'u_angle2'),
+            tint: gl.getUniformLocation(program, 'u_tint'),
         };
         gl.uniform1i(u.from, 0);
         gl.uniform1i(u.to, 1);
         gl.uniform1i(u.disp, 2);
+        // #00542a — replaces the magenta in the source PNGs
+        gl.uniform3f(u.tint, 0x00 / 255, 0x54 / 255, 0x2a / 255);
 
         const mkTex = (filter = gl.LINEAR) => {
             const t = gl.createTexture();

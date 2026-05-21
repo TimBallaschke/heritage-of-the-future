@@ -7,7 +7,7 @@ html {
   height: 100dvh;
   overflow: hidden;
   touch-action: none;
-  background-color: #decec1;
+  background-color: #dedddc;
 }
 
 *, *:before, *:after {
@@ -25,7 +25,8 @@ body {
   inset: 0;
   overflow: hidden;
   overscroll-behavior: none;
-  background-color: #decec1;
+  background-color: #dedddc;
+  color: #ff5cc3;
 }
 
 #background-canvas {
@@ -54,7 +55,7 @@ body {
   font-size: 13rem;
   line-height: 0.9;
   letter-spacing: -0.02em;
-  color: #000000;
+  color: #ff5cc3;
 }
 
 #navigation-wrapper {
@@ -74,7 +75,7 @@ body {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  color: #000000;
+  color: #ff5cc3;
 }
 
 #artwork-name {
@@ -97,7 +98,7 @@ body {
 #room-selector-line {
   width: 3px;
   height: 30px;
-  background: #000000;
+  background: #ff5cc3;
 }
 
 #seekbar-time-wrapper {
@@ -126,7 +127,7 @@ body {
   position: relative;
   width: 0;
   height: 100%;
-  background: #000000;
+  background: #ff5cc3;
 }
 #seekbar-progress-fill::after {
   content: "";
@@ -137,7 +138,7 @@ body {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #000000;
+  background: #ff5cc3;
 }
 
 #seekbar-times {
@@ -170,7 +171,7 @@ body {
 }
 
 #previous-button {
-  border-left: 3px solid #000000;
+  border-left: 3px solid #ff5cc3;
 }
 
 #previous-button::before,
@@ -183,7 +184,7 @@ body {
   height: 0;
   border-style: solid;
   border-width: 16px 27px 16px 0;
-  border-color: transparent #000000 transparent transparent;
+  border-color: transparent #ff5cc3 transparent transparent;
 }
 
 #previous-button::before {
@@ -195,7 +196,7 @@ body {
 }
 
 #next-button {
-  border-right: 3px solid #000000;
+  border-right: 3px solid #ff5cc3;
 }
 
 #next-button::before,
@@ -208,7 +209,7 @@ body {
   height: 0;
   border-style: solid;
   border-width: 16px 0 16px 27px;
-  border-color: transparent transparent transparent #000000;
+  border-color: transparent transparent transparent #ff5cc3;
 }
 
 #next-button::before {
@@ -238,7 +239,7 @@ body {
   height: 0;
   border-style: solid;
   border-width: 22px 0 22px 46px;
-  border-color: transparent transparent transparent #000000;
+  border-color: transparent transparent transparent #ff5cc3;
 }
 #play-button::after {
   content: "";
@@ -247,7 +248,7 @@ body {
 }
 #play-button.playing::before {
   border: 0;
-  background: #000000;
+  background: #ff5cc3;
   width: 16px;
   height: 44px;
   transform: translate(calc(-50% - 11px), -50%);
@@ -256,7 +257,7 @@ body {
   display: block;
   top: 50%;
   left: 50%;
-  background: #000000;
+  background: #ff5cc3;
   width: 16px;
   height: 44px;
   transform: translate(calc(-50% + 11px), -50%);
@@ -301,7 +302,7 @@ body {
   justify-content: center;
   width: 20rem;
   height: 20rem;
-  border: 3px solid #000000;
+  border: 3px solid #ff5cc3;
   border-radius: 50%;
   font-size: 13rem;
 }

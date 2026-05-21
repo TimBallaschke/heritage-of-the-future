@@ -9,7 +9,7 @@ html {
     height: 100dvh;
     overflow: hidden;
     touch-action: none;
-    background-color: #decec1;
+    background-color: #dedddc;
 }
 
 *, *:before, *:after {
@@ -26,7 +26,8 @@ body {
     inset: 0;
     overflow: hidden;
     overscroll-behavior: none;
-    background-color: #decec1;
+    background-color: #dedddc;
+    color: $color-1;
 }
 
 #background-canvas {
