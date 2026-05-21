@@ -208,8 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let animId = null;
         let dispReady = false;
 
-        // Initialize displacement texture from image-1
-        buildDisplacementTexture('assets/images/image-1.png').then(() => {
+        // Initialize displacement texture from image-1 (absolute path so it
+        // resolves regardless of how deep the document URL is)
+        buildDisplacementTexture('/assets/images/image-1.png').then(() => {
             dispReady = true;
             if (fromImg) render(0);
         });
@@ -223,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     toImg = img;
                     upload(texFrom, img);
                     upload(texTo, img);
-                    if (dispReady) render(0);
+                    render(0);
                     return;
                 }
                 toImg = img;
@@ -266,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#language-switcher > [data-lang]').forEach(item => {
         item.addEventListener('click', () => {
             item.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            if (data) apply(activeTrackIndex, item.dataset.lang);
         });
     });
 
@@ -408,14 +410,29 @@ document.addEventListener('DOMContentLoaded', () => {
     let data = null;
     let activeLang = null;
     let activeTrackIndex = 0;
+    let activeRoomIndex = 0;
     let applying = false;
+
+    const syncUrl = () => {
+        if (!data || !Array.isArray(data.rooms) || !activeLang) return;
+        const room = data.rooms[activeRoomIndex];
+        const track = data.tracks && data.tracks[activeTrackIndex];
+        if (!room || !track) return;
+        const desired = `/${activeLang}/home/${room.id}/${track.id}`;
+        if (window.location.pathname !== desired) {
+            history.replaceState({}, '', desired);
+        }
+    };
 
     const apply = (trackIndex, lang, direction = 'next') => {
         if (!data || !data.languages[lang] || !data.tracks[trackIndex]) return;
         const track = data.tracks[trackIndex];
         const t = track.translations[lang];
         if (!t) return;
-        if (lang === activeLang && trackIndex === activeTrackIndex) return;
+        if (lang === activeLang && trackIndex === activeTrackIndex) {
+            syncUrl();
+            return;
+        }
 
         activeLang = lang;
         activeTrackIndex = trackIndex;
@@ -461,6 +478,8 @@ document.addEventListener('DOMContentLoaded', () => {
             activeItem.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
         }
 
+        syncUrl();
+
         setTimeout(() => { applying = false; }, 150);
     };
 
@@ -490,39 +509,118 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Room switching ---
+    // Switch the active room. Re-points data.tracks at the new room and
+    // forces apply() to re-render (by invalidating activeTrackIndex).
+    // Returns true if the active room actually changed.
+    const setRoom = (newRoomIdx, opts = {}) => {
+        if (!data || !data.rooms || !data.rooms[newRoomIdx]) return false;
+        if (newRoomIdx === activeRoomIndex) return false;
+        activeRoomIndex = newRoomIdx;
+        data.tracks = data.rooms[newRoomIdx].tracks;
+        activeTrackIndex = -1; // ensure subsequent apply() does not early-return
+        if (roomSwitcher && opts.scroll !== false) {
+            const roomNum = data.rooms[newRoomIdx].number;
+            const item = roomSwitcher.querySelector(`[data-room="${roomNum}"]`);
+            if (item) {
+                item.scrollIntoView({
+                    behavior: opts.behavior || 'smooth',
+                    inline: 'center',
+                    block: 'nearest',
+                });
+            }
+        }
+        return true;
+    };
+
+    // Click on a room item -> jump to its first artwork
+    if (roomSwitcher) {
+        roomSwitcher.querySelectorAll('[data-room]').forEach(item => {
+            item.addEventListener('click', () => {
+                if (!data) return;
+                const roomNum = parseInt(item.dataset.room, 10);
+                const idx = data.rooms.findIndex(r => r.number === roomNum);
+                if (idx < 0) return;
+                setRoom(idx);
+                apply(0, activeLang);
+            });
+        });
+    }
+
+    // Scroll/swipe detection for the room switcher
+    const detectCenteredRoom = () => {
+        if (!roomSwitcher || applying || !data) return;
+        const rect = roomSwitcher.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        let closest = null;
+        let closestDist = Infinity;
+        roomSwitcher.querySelectorAll('[data-room]').forEach(item => {
+            const r = item.getBoundingClientRect();
+            const dist = Math.abs(r.left + r.width / 2 - centerX);
+            if (dist < closestDist) {
+                closest = item;
+                closestDist = dist;
+            }
+        });
+        if (!closest) return;
+        const roomNum = parseInt(closest.dataset.room, 10);
+        const idx = data.rooms.findIndex(r => r.number === roomNum);
+        if (idx >= 0 && idx !== activeRoomIndex) {
+            setRoom(idx, { scroll: false }); // already centered by the scroll
+            apply(0, activeLang);
+        }
+    };
+
+    if (roomSwitcher) {
+        let roomScrollTimer = null;
+        roomSwitcher.addEventListener('scroll', () => {
+            if (applying) return;
+            clearTimeout(roomScrollTimer);
+            roomScrollTimer = setTimeout(detectCenteredRoom, 150);
+        });
+    }
+
+    // --- Prev / Next (cross-room) ---
+    const navigate = (direction) => {
+        if (!data || !data.rooms || data.rooms.length === 0) return;
+        const step = direction === 'next' ? 1 : -1;
+        let newTrackIdx = activeTrackIndex + step;
+        let newRoomIdx = activeRoomIndex;
+
+        const tracksInCurrent = data.rooms[newRoomIdx].tracks.length;
+        if (newTrackIdx >= tracksInCurrent) {
+            newRoomIdx = (newRoomIdx + 1) % data.rooms.length;
+            newTrackIdx = 0;
+        } else if (newTrackIdx < 0) {
+            newRoomIdx = (newRoomIdx - 1 + data.rooms.length) % data.rooms.length;
+            newTrackIdx = data.rooms[newRoomIdx].tracks.length - 1;
+        }
+
+        if (newRoomIdx !== activeRoomIndex) {
+            setRoom(newRoomIdx);
+        }
+        apply(newTrackIdx, activeLang, direction);
+    };
+
     const prevButton = document.getElementById('previous-button');
     const nextButton = document.getElementById('next-button');
-
-    if (prevButton) {
-        prevButton.addEventListener('click', () => {
-            if (!data || data.tracks.length === 0) return;
-            const newIndex = (activeTrackIndex - 1 + data.tracks.length) % data.tracks.length;
-            apply(newIndex, activeLang, 'prev');
-        });
-    }
-
-    if (nextButton) {
-        nextButton.addEventListener('click', () => {
-            if (!data || data.tracks.length === 0) return;
-            const newIndex = (activeTrackIndex + 1) % data.tracks.length;
-            apply(newIndex, activeLang, 'next');
-        });
-    }
+    if (prevButton) prevButton.addEventListener('click', () => navigate('prev'));
+    if (nextButton) nextButton.addEventListener('click', () => navigate('next'));
 
     const prefetchAllAudio = () => {
-        if (!data || !data.tracks) return;
+        if (!data || !data.rooms) return;
         const urls = new Set();
-        data.tracks.forEach(track => {
-            Object.values(track.translations).forEach(t => {
-                if (t.audioSrc) urls.add(t.audioSrc);
+        data.rooms.forEach(room => {
+            room.tracks.forEach(track => {
+                Object.values(track.translations).forEach(t => {
+                    if (t.audioSrc) urls.add(t.audioSrc);
+                });
             });
         });
         urls.forEach(url => {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.as = 'audio';
-            link.href = url;
-            document.head.appendChild(link);
+            const audio = new Audio();
+            audio.preload = 'auto';
+            audio.src = url;
         });
     };
 
@@ -531,13 +629,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!node) return null;
         try {
             const parsed = JSON.parse(node.textContent);
-            const roomIdx = 0;
+            const roomIdx = typeof parsed.initialRoomIndex === 'number' ? parsed.initialRoomIndex : 0;
             const room = parsed.rooms && parsed.rooms[roomIdx];
             if (!room) return null;
             return {
                 languages: parsed.languages,
                 rooms: parsed.rooms,
                 tracks: room.tracks,
+                initialRoomIndex: roomIdx,
+                initialTrackIndex: typeof parsed.initialTrackIndex === 'number' ? parsed.initialTrackIndex : 0,
             };
         } catch (err) {
             console.error('Failed to parse inline page data:', err);
@@ -548,7 +648,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const inline = loadInlineData();
     if (inline) {
         data = inline;
-        apply(0, document.documentElement.lang || 'en');
+        activeRoomIndex = inline.initialRoomIndex;
+        apply(inline.initialTrackIndex, document.documentElement.lang || 'en');
         prefetchAllAudio();
     }
 
@@ -561,6 +662,19 @@ document.addEventListener('DOMContentLoaded', () => {
         centerDefault();
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(centerDefault);
+        }
+    }
+
+    // --- Initial centering of the active room ---
+    if (roomSwitcher && data && data.rooms[activeRoomIndex]) {
+        const roomNum = data.rooms[activeRoomIndex].number;
+        const item = roomSwitcher.querySelector(`[data-room="${roomNum}"]`);
+        if (item) {
+            const centerRoom = () => item.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
+            centerRoom();
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(centerRoom);
+            }
         }
     }
 });
