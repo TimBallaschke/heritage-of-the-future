@@ -4,6 +4,35 @@
         "ar": { "lang": "ar", "dir": "rtl" },
         "he": { "lang": "he", "dir": "rtl" }
     },
+    "rooms": [
+        {
+            "id": "room-1",
+            "number": 1,
+            "translations": {
+                "en": { "name": "Room 1" },
+                "ar": { "name": "غرفة 1" },
+                "he": { "name": "חדר 1" }
+            }
+        },
+        {
+            "id": "room-2",
+            "number": 2,
+            "translations": {
+                "en": { "name": "Room 2" },
+                "ar": { "name": "غرفة 2" },
+                "he": { "name": "חדר 2" }
+            }
+        },
+        {
+            "id": "room-3",
+            "number": 3,
+            "translations": {
+                "en": { "name": "Room 3" },
+                "ar": { "name": "غرفة 3" },
+                "he": { "name": "חדר 3" }
+            }
+        }
+    ],
     "tracks": [
         {
             "id": "space-of-collective-memory",

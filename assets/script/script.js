@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const switcher = document.getElementById('language-switcher');
+    const roomSwitcher = document.getElementById('room-switcher');
     const artistsEl = document.getElementById('artists-names');
     const artworkEl = document.getElementById('artwork-name');
     const artworkNumberEl = document.getElementById('artwork-number');
@@ -454,6 +455,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const langMeta = data.languages[lang];
         document.documentElement.lang = langMeta.lang;
         document.documentElement.dir = langMeta.dir;
+
+        if (roomSwitcher && Array.isArray(data.rooms)) {
+            roomSwitcher.querySelectorAll('[data-room]').forEach(item => {
+                const room = data.rooms.find(r => String(r.number) === item.dataset.room);
+                const label = room && room.translations[lang] && room.translations[lang].name;
+                if (label) item.textContent = label;
+            });
+        }
 
         const activeItem = switcher && switcher.querySelector(`[data-lang="${lang}"]`);
         if (activeItem) {
