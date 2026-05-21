@@ -385,26 +385,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Scale transition for the artwork number ---
     const SCALE_DURATION = 400;
 
-    const scaleTransition = (wrapperEl, contentEl, newContent, props) => {
+    const scaleTransition = (wrapperEl, contentEl, newContent) => {
         if (!wrapperEl || !contentEl) return;
-        const currentRot = wrapperEl.dataset.rotation !== undefined ? wrapperEl.dataset.rotation : 0;
 
         wrapperEl.style.transition = `transform ${SCALE_DURATION}ms ease`;
-        wrapperEl.style.transform = `rotate(${currentRot}deg) scale(0.5)`;
+        wrapperEl.style.transform = 'scale(0.5)';
 
         setTimeout(() => {
             contentEl.textContent = newContent;
-            if (props.x !== undefined) wrapperEl.style.left = `${props.x}rem`;
-            if (props.y !== undefined) wrapperEl.style.top = `${props.y}dvh`;
 
             wrapperEl.style.transition = 'none';
-            wrapperEl.style.transform = `rotate(${props.rotation}deg) scale(0.5)`;
-            wrapperEl.dataset.rotation = props.rotation;
+            wrapperEl.style.transform = 'scale(0.5)';
 
             void wrapperEl.offsetHeight;
 
             wrapperEl.style.transition = `transform ${SCALE_DURATION}ms ease`;
-            wrapperEl.style.transform = `rotate(${props.rotation}deg) scale(1)`;
+            wrapperEl.style.transform = 'scale(1)';
         }, SCALE_DURATION);
     };
 
@@ -438,11 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (artworkNumberWrapperEl && artworkNumberEl && track.number !== undefined) {
-            scaleTransition(artworkNumberWrapperEl, artworkNumberEl, track.number, {
-                x: track.x,
-                y: track.y,
-                rotation: track.rotation ?? 0,
-            });
+            scaleTransition(artworkNumberWrapperEl, artworkNumberEl, track.number);
         }
 
         if (playButton) playButton.classList.remove('playing');

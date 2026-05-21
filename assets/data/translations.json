@@ -39,7 +39,6 @@
             "number": 1,
             "x": 55,
             "y": 14,
-            "rotation": -32,
             "image": "assets/images/image-1.png",
             "translations": {
                 "en": {
@@ -64,7 +63,6 @@
             "number": 2,
             "x": 5,
             "y": 44,
-            "rotation": 18,
             "image": "assets/images/image-2.png",
             "translations": {
                 "en": {
@@ -89,7 +87,6 @@
             "number": 3,
             "x": 10,
             "y": 20,
-            "rotation": -7,
             "image": "assets/images/image-3.png",
             "translations": {
                 "en": {
@@ -114,7 +111,6 @@
             "number": 4,
             "x": 70,
             "y": 20,
-            "rotation": 41,
             "image": "assets/images/image-4.png",
             "translations": {
                 "en": {
@@ -139,7 +135,6 @@
             "number": 5,
             "x": 12,
             "y": 13,
-            "rotation": 14,
             "image": "assets/images/image-5.png",
             "translations": {
                 "en": {

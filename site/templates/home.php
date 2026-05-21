@@ -10,9 +10,6 @@
 <body>
     <canvas id="background-canvas"></canvas>
     <div id="content">
-        <div id="artwork-number-wrapper">
-            <div id="artwork-number">1</div>
-        </div>
         <div id="room-switcher-wrapper">
             <div id="room-switcher">
                 <div data-room="1">Room 1</div>
@@ -27,6 +24,9 @@
             <div id="artists-names">Sharon<br>Golan</div>
         </div>
         <div id="artwork-name-wrapper">
+            <div id="artwork-number-wrapper">
+                <div id="artwork-number">1</div>
+            </div>
             <div id="artwork-name">Space<br>of Collective<br>Memory</div>
         </div>
         <div id="navigation-wrapper">
