@@ -1,0 +1,11 @@
+Title: מרחב הזיכרון הקולקטיבי
+----
+Number: 1
+----
+Image_path: assets/images/image-1.png
+----
+Artist_name: שרון<br>גולן
+----
+Artwork_title: מרחב<br>הזיכרון<br>הקולקטיבי
+----
+Audio_path: assets/audio/voice-03.mp3

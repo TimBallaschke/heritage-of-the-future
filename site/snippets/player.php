@@ -28,6 +28,12 @@ foreach ($homePage->children()->listed() as $room) {
         ];
     }
 
+    $colors = [
+        'background' => (string)$room->background_color(),
+        'image'      => (string)$room->image_color(),
+        'font'       => (string)$room->font_color(),
+    ];
+
     $tracks = [];
     foreach ($room->children()->listed()->sortBy('number', 'asc') as $artwork) {
         $artTrans = [];
@@ -51,6 +57,7 @@ foreach ($homePage->children()->listed() as $room) {
         'id'           => $room->slug(),
         'number'       => $room->num() ?? (count($rooms) + 1),
         'translations' => $roomTrans,
+        'colors'       => $colors,
         'tracks'       => $tracks,
     ];
 }
@@ -76,9 +83,12 @@ $initialTrack = $initialRoom['tracks'][$initialTrackIndex] ?? null;
 $initialArtist  = $initialTrack['translations'][$currentLang]['artistName']  ?? '';
 $initialArtwork = $initialTrack['translations'][$currentLang]['artworkName'] ?? '';
 $initialNumber  = $initialTrack['number'] ?? 1;
+$initialColors  = $initialRoom['colors'] ?? ['background' => '', 'image' => '', 'font' => ''];
+$initialBg      = $initialColors['background'] ?: '#dedddc';
+$initialFont    = $initialColors['font']       ?: '#ff5cc3';
 ?>
 <!DOCTYPE html>
-<html lang="<?= $currentLang ?>" dir="<?= $currentDir ?>">
+<html lang="<?= $currentLang ?>" dir="<?= $currentDir ?>" style="--room-bg: <?= esc($initialBg) ?>; --room-color: <?= esc($initialFont) ?>;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

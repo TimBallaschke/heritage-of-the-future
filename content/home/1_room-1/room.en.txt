@@ -1,5 +1,7 @@
 Title: Room 1
-
 ----
-
-Uuid: mfmy3ygipduelmz4
+Background_color: #dedddc
+----
+Image_color: #00542a
+----
+Font_color: #ff5cc3

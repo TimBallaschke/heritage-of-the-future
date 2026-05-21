@@ -1,9 +1,26 @@
 title: Room
 
-sections:
-  artworks:
-    type: pages
-    label: Artworks
-    template: artwork
-    info: "#{{ page.number }} — {{ page.artist_name }}"
-    sortBy: number asc
+columns:
+  - width: 1/3
+    fields:
+      background_color:
+        label: Background color
+        type: color
+        translate: false
+      image_color:
+        label: Image color
+        type: color
+        translate: false
+        help: Tint applied to the silhouette PNGs.
+      font_color:
+        label: Font color
+        type: color
+        translate: false
+  - width: 2/3
+    sections:
+      artworks:
+        type: pages
+        label: Artworks
+        template: artwork
+        info: "#{{ page.number }} — {{ page.artist_name }}"
+        sortBy: number asc

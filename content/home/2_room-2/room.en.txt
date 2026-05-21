@@ -1,5 +1,7 @@
 Title: Room 2
-
 ----
-
-Uuid: 4uhixmoydcnpmajw
+Background_color: #bfbfbf
+----
+Image_color: #fbff14
+----
+Font_color: #000000

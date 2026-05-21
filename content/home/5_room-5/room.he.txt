@@ -1,0 +1,7 @@
+Title: חדר 5
+----
+Background_color: #725949
+----
+Image_color: #fb498d
+----
+Font_color: #ffffff

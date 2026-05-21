@@ -1,5 +1,7 @@
 Title: Room 3
-
 ----
-
-Uuid: cpolyazw5sq84t6e
+Background_color: #203b31
+----
+Image_color: #f25377
+----
+Font_color: #aedffa

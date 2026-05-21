@@ -1,0 +1,25 @@
+Title: Shifting Sands
+
+----
+
+Number: 3
+
+----
+
+Image-path: assets/images/image-3.png
+
+----
+
+Artist-name: Lou<br>Moria
+
+----
+
+Artwork-title: Shifting<br>Sands
+
+----
+
+Audio-path: assets/audio/voice-07.mp3
+
+----
+
+Uuid: iqm7rwtjonucb0uc

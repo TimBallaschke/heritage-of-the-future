@@ -1,0 +1,11 @@
+Title: الطريق إلى الجحيم مُعبَّد عن سابق قصد
+----
+Number: 2
+----
+Image_path: assets/images/image-2.png
+----
+Artist_name: أور<br>ألكسندروفيتش
+----
+Artwork_title: الطريق إلى الجحيم<br>مُعبَّد<br>عن سابق قصد
+----
+Audio_path: assets/audio/voice-05.mp3

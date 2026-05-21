@@ -1,0 +1,7 @@
+Title: חדר 4
+----
+Background_color: #2d2d4e
+----
+Image_color: #ff8c42
+----
+Font_color: #c4f1be

@@ -1,0 +1,11 @@
+Title: הדרך לגיהינום מרוצפת בכוונה תחילה
+----
+Number: 2
+----
+Image_path: assets/images/image-2.png
+----
+Artist_name: אור<br>אלכסנדרוביץ'
+----
+Artwork_title: הדרך לגיהינום<br>מרוצפת בכוונה<br>תחילה
+----
+Audio_path: assets/audio/voice-06.mp3

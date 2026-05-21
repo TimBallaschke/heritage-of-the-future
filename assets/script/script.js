@@ -256,7 +256,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fromImg && dispReady) render(animId ? 0.5 : 0);
         });
 
-        return { transitionTo };
+        const setTint = (hex) => {
+            const m = /^#([0-9a-f]{6})$/i.exec(hex || '');
+            if (!m) return;
+            const n = parseInt(m[1], 16);
+            gl.useProgram(program);
+            gl.uniform3f(u.tint, ((n >> 16) & 0xff) / 255, ((n >> 8) & 0xff) / 255, (n & 0xff) / 255);
+            if (fromImg && !animId) render(0);
+        };
+
+        return { transitionTo, setTint };
     };
 
     const background = setupBackground();
@@ -515,6 +524,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Room switching ---
+    const applyRoomColors = (room) => {
+        if (!room || !room.colors) return;
+        const root = document.documentElement;
+        if (room.colors.background) root.style.setProperty('--room-bg', room.colors.background);
+        if (room.colors.font)       root.style.setProperty('--room-color', room.colors.font);
+        if (room.colors.image && background && background.setTint) {
+            background.setTint(room.colors.image);
+        }
+    };
+
     // Switch the active room. Re-points data.tracks at the new room and
     // forces apply() to re-render (by invalidating activeTrackIndex).
     // Returns true if the active room actually changed.
@@ -524,6 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
         activeRoomIndex = newRoomIdx;
         data.tracks = data.rooms[newRoomIdx].tracks;
         activeTrackIndex = -1; // ensure subsequent apply() does not early-return
+        applyRoomColors(data.rooms[newRoomIdx]);
         if (roomSwitcher && opts.scroll !== false) {
             const roomNum = data.rooms[newRoomIdx].number;
             const item = roomSwitcher.querySelector(`[data-room="${roomNum}"]`);
@@ -654,6 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (inline) {
         data = inline;
         activeRoomIndex = inline.initialRoomIndex;
+        applyRoomColors(data.rooms[activeRoomIndex]);
         apply(inline.initialTrackIndex, document.documentElement.lang || 'en');
         prefetchAllAudio();
     }

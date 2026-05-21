@@ -1,0 +1,25 @@
+Title: The Road to Hell Is Intentionally Paved
+
+----
+
+Number: 2
+
+----
+
+Image-path: assets/images/image-2.png
+
+----
+
+Artist-name: Or<br>Aleksandrowicz
+
+----
+
+Artwork-title: The Road to Hell<br>Is Intentionally<br>Paved
+
+----
+
+Audio-path: assets/audio/voice-04.mp3
+
+----
+
+Uuid: vmys5qqf7inx4g3a

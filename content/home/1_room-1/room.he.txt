@@ -1,1 +1,7 @@
 Title: חדר 1
+----
+Background_color: #dedddc
+----
+Image_color: #00542a
+----
+Font_color: #ff5cc3

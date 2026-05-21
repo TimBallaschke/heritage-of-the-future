@@ -1,0 +1,25 @@
+Title: Gader Haya – Hedge
+
+----
+
+Number: 4
+
+----
+
+Image-path: assets/images/image-4.png
+
+----
+
+Artist-name: Yael<br>Moria
+
+----
+
+Artwork-title: Gader Haya<br>– Hedge
+
+----
+
+Audio-path: assets/audio/voice-10.mp3
+
+----
+
+Uuid: 65qvfysa9elwffyn
