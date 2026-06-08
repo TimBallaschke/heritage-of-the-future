@@ -1,4 +1,4 @@
-Title: חדר 2
+Title: חדר אוכל
 ----
 Background_color: #bfbfbf
 ----

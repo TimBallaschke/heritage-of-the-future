@@ -52,10 +52,20 @@ body {
 
 #artists-names-wrapper {
     flex: 0 0 auto;
-    font-size: $font-size-1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4rem;
+    font-size: $font-size-2;
     line-height: $line-height-1;
     letter-spacing: $letter-spacing-1;
     color: inherit;
+}
+
+#artists-names {
+    flex: 1 1 auto;
+    min-width: 0; // allow the name to wrap instead of overflowing into the number
+    overflow-wrap: break-word;
 }
 
 #navigation-wrapper {
@@ -75,7 +85,7 @@ body {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     color: inherit;
 }
@@ -306,7 +316,7 @@ body {
 }
 
 #artwork-number-wrapper {
-    flex: 0 0 auto;
+    flex: 0 0 auto; // fixed size; never shrinks, so the name can't push into it
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,4 +1,4 @@
-Title: Room 2
+Title: Dining Room
 ----
 Background_color: #bfbfbf
 ----

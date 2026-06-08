@@ -1,7 +1,7 @@
-Title: Room 4
+Title: Bedroom
 ----
-Background_color: #2d2d4e
+Background_color: #cfbdd9
 ----
-Image_color: #ff8c42
+Image_color: #ffffff
 ----
-Font_color: #c4f1be
+Font_color: #ff006a

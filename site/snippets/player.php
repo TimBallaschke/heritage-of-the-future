@@ -111,11 +111,11 @@ $initialFont    = $initialColors['font']       ?: '#ff5cc3';
         </div>
         <div id="artists-names-wrapper">
             <div id="artists-names"><?= $initialArtist ?></div>
-        </div>
-        <div id="artwork-name-wrapper">
             <div id="artwork-number-wrapper">
                 <div id="artwork-number"><?= esc($initialNumber) ?></div>
             </div>
+        </div>
+        <div id="artwork-name-wrapper">
             <div id="artwork-name"><?= $initialArtwork ?></div>
         </div>
         <div id="navigation-wrapper">

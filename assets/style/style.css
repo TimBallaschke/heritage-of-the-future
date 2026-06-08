@@ -53,10 +53,20 @@ body {
 
 #artists-names-wrapper {
   flex: 0 0 auto;
-  font-size: 13rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4rem;
+  font-size: 8rem;
   line-height: 0.9;
   letter-spacing: -0.02em;
   color: inherit;
+}
+
+#artists-names {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 #navigation-wrapper {
@@ -74,7 +84,7 @@ body {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   color: inherit;
 }

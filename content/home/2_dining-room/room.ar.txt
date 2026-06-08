@@ -1,4 +1,4 @@
-Title: غرفة 2
+Title: غرفة الطعام
 ----
 Background_color: #bfbfbf
 ----
