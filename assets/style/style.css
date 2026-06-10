@@ -13,7 +13,8 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
   scrollbar-width: none; /* Firefox */
-  user-select: none;
+  -moz-user-select: none;
+       user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none; /* Disable iOS long-press callout */
 }
@@ -35,7 +36,9 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 #content {
@@ -55,7 +58,7 @@ body {
   align-items: center;
   gap: 4rem;
   font-size: 8rem;
-  line-height: 0.9;
+  line-height: 1.1;
   letter-spacing: -0.02em;
   color: inherit;
 }
@@ -88,8 +91,8 @@ body {
 
 #artwork-name {
   text-align: center;
-  font-size: 13rem;
-  line-height: 0.9;
+  font-size: 12rem;
+  line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
@@ -277,7 +280,7 @@ body {
   flex-direction: row;
   align-items: center;
   direction: ltr;
-  gap: 8rem;
+  gap: 10rem;
   margin-inline: -4rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -335,6 +338,4 @@ body {
 }
 body {
   font-family: "Noto Sans Hebrew", "Noto Sans Arabic", "helvetica-neue-lt-pro", Helvetica, Arial, sans-serif;
-}
-
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */
