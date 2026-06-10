@@ -327,4 +327,42 @@ body {
     font-size: $font-size-3;
 }
 
+// --- Mobile-only experience ---
+// The player is designed for phones. On viewports wider than ~800px we hide
+// it and show a message asking the visitor to switch to a mobile device.
+// Sizes here are in px (not rem) on purpose: the root font-size is 1vw, so rem
+// would scale with the (large) desktop width and blow the message up.
+#desktop-blocker {
+    display: none;
+}
+
+@media (min-width: 801px) {
+    #background-canvas,
+    #content {
+        display: none !important;
+    }
+
+    #desktop-blocker {
+        display: flex;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        text-align: center;
+        background-color: var(--room-bg, #dedddc);
+        color: var(--room-color, #{$color-1});
+        font-family: $font-stack;
+
+        p {
+            margin: 0;
+            max-width: 18ch;
+            font-size: 28px;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+        }
+    }
+}
+
 

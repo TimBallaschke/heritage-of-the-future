@@ -97,9 +97,12 @@ $initialFont    = $initialColors['font']       ?: '#ff5cc3';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $page->title() ?></title>
     <link rel="stylesheet" href="https://use.typekit.net/hrz6qlq.css">
-    <link rel="stylesheet" href="<?= url('assets/style/style.css') ?>">
+    <link rel="stylesheet" href="<?= url('assets/style/style.css') ?>?v=<?= @filemtime(kirby()->root('index') . '/assets/style/style.css') ?>">
 </head>
 <body>
+    <div id="desktop-blocker">
+        <p>Please visit on a mobile device</p>
+    </div>
     <canvas id="background-canvas"></canvas>
     <div id="content">
         <div id="room-switcher-wrapper">
@@ -154,6 +157,6 @@ $initialFont    = $initialColors['font']       ?: '#ff5cc3';
     </div>
     <audio id="audio" preload="metadata"></audio>
     <script type="application/json" id="page-data"><?= json_encode($pageData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
-    <script src="<?= url('assets/script/script.js') ?>"></script>
+    <script src="<?= url('assets/script/script.js') ?>?v=<?= @filemtime(kirby()->root('index') . '/assets/script/script.js') ?>"></script>
 </body>
 </html>

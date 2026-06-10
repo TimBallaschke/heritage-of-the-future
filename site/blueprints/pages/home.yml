@@ -5,5 +5,6 @@ sections:
     type: pages
     label: Rooms
     template: room
-    info: "{{ page.artworks.toPages.count }} artworks"
+    create: false
+    info: "{{ page.children.listed.count }} artworks"
     sortBy: num asc

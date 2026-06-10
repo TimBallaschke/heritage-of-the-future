@@ -1,5 +1,11 @@
 title: Artwork
 
+# Auto-generate the slug from the title so the user doesn't have to enter a
+# "URL appendix" when creating an artwork. Setting create.slug to a string
+# hides the slug field from the create dialog (Kirby derives it from the title).
+create:
+  slug: "{{ page.title.slug }}"
+
 fields:
   artist_name:
     label: Artist name
