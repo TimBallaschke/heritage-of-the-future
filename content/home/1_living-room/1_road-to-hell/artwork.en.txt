@@ -1,0 +1,11 @@
+Title: The Road to Hell is Intentionally Paved
+----
+Artist_name: Or Aleksandrowicz
+----
+Artwork_title: The Road to Hell is Intentionally Paved
+----
+Audio:
+
+- road-to-hell-en.mp3
+----
+Uuid: yuxkf1nfxzq8purh

@@ -1,0 +1,5 @@
+title: Admin
+
+# Open the Panel directly inside the "Heritage of the Future" page,
+# which lists the rooms — skips the intermediate Site dashboard.
+home: "{{ site.find('home').panel.url }}"

@@ -1,0 +1,11 @@
+Title: Ridge
+----
+Artist_name: Deborah Pinto Fdeda, Ifat Finkelman
+----
+Artwork_title: Ridge
+----
+Audio:
+
+- ridge-en.mp3
+----
+Uuid: qojok5jxhkzenef8

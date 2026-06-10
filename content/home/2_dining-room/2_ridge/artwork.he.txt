@@ -1,0 +1,9 @@
+Title: רֶכֶס
+----
+Artist_name: דבורה פינטו פדדה, יפעת פינקלמן
+----
+Artwork_title: רֶכֶס
+----
+Audio:
+
+- ridge-he.mp3

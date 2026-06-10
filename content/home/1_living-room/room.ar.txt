@@ -1,7 +1,7 @@
 Title: غرفة المعيشة
 ----
-Background_color: #decec1
+Background_color: #dbe1dd
 ----
-Image_color: #ffffff
+Image_color: #88a263
 ----
-Font_color: #fb45b6
+Font_color: #333f69

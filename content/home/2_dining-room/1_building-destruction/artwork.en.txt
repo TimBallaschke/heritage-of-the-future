@@ -1,0 +1,11 @@
+Title: Building Destruction in Three Acts
+----
+Artist_name: Elad Horn, Lev Pavlov, Christina Eidenzon
+----
+Artwork_title: Building Destruction in Three Acts
+----
+Audio:
+
+- building-destruction-en.mp3
+----
+Uuid: nsoms3wpd2gjbcp5

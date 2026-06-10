@@ -1,7 +1,17 @@
 Title: Dining Room
+
 ----
-Background_color: #bfbfbf
+
+Background-color: #928980
+
 ----
-Image_color: #fbff14
+
+Image-color: #98aea2
+
 ----
-Font_color: #000000
+
+Font-color: #ffffff
+
+----
+
+Uuid: yhidgeubbomtnihv

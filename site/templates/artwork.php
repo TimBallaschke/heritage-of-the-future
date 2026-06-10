@@ -16,7 +16,7 @@ foreach ($homePage->children()->listed() as $r) {
 
 $initialTrackIndex = 0;
 $idx = 0;
-foreach ($roomPage->children()->listed()->sortBy('number', 'asc') as $a) {
+foreach ($roomPage->children()->listed()->sortBy('num', 'asc') as $a) {
     if ($a->is($page)) { $initialTrackIndex = $idx; break; }
     $idx++;
 }

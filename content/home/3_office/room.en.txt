@@ -1,7 +1,17 @@
 Title: Office
+
 ----
-Background_color: #203b31
+
+Background-color: #82a6c8
+
 ----
-Image_color: #f25377
+
+Image-color: #c7d49f
+
 ----
-Font_color: #aedffa
+
+Font-color: #874046
+
+----
+
+Uuid: hlbegowk2gu5tkjh

@@ -1,0 +1,9 @@
+Title: 972
+----
+Artist_name: אורן אלדר, עידית קופסקי
+----
+Artwork_title: 972
+----
+Audio:
+
+- 972-he.mp3

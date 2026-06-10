@@ -1,7 +1,17 @@
 Title: Bedroom
+
 ----
-Background_color: #cfbdd9
+
+Background-color: #edb8c5
+
 ----
-Image_color: #ffffff
+
+Image-color: #578d73
+
 ----
-Font_color: #ff006a
+
+Font-color: #3b3b3b
+
+----
+
+Uuid: o4qhlafwrey9duy6

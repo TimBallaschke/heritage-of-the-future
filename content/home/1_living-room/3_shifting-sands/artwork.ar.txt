@@ -1,11 +1,7 @@
-Title: رمالٌ متحوّلة
+Title: قبل أن تتغيّر الأرض
 ----
-Number: 3
+Artist_name: لو موريا
 ----
-Image_path: assets/images/image-3.png
+Artwork_title: قبل أن تتغيّر الأرض
 ----
-Artist_name: لو<br>موريا
-----
-Artwork_title: رمالٌ<br>متحوّلة
-----
-Audio_path: assets/audio/voice-08.mp3
+Audio:

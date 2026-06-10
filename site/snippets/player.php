@@ -35,20 +35,23 @@ foreach ($homePage->children()->listed() as $room) {
     ];
 
     $tracks = [];
-    foreach ($room->children()->listed()->sortBy('number', 'asc') as $artwork) {
+    foreach ($room->children()->listed()->sortBy('num', 'asc') as $artwork) {
         $artTrans = [];
         foreach (kirby()->languages() as $lang) {
             $c = $artwork->content($lang->code());
+            $audioFile = $c->audio()->toFile();
             $artTrans[$lang->code()] = [
                 'artistName'  => (string)$c->artist_name(),
                 'artworkName' => (string)$c->artwork_title(),
-                'audioSrc'    => url((string)$c->audio_path()),
+                'audioSrc'    => $audioFile ? $audioFile->url() : '',
             ];
         }
         $tracks[] = [
             'id'           => $artwork->slug(),
-            'number'       => (int)$artwork->number()->toInt(),
-            'image'        => url((string)$artwork->image_path()),
+            'number'       => (int)$artwork->num(),
+            // Background image is set up in code by convention, not via the panel:
+            // each artwork maps to assets/images/<slug>.png
+            'image'        => url('assets/images/' . $artwork->slug() . '.png'),
             'translations' => $artTrans,
         ];
     }
@@ -149,7 +152,7 @@ $initialFont    = $initialColors['font']       ?: '#ff5cc3';
             </div>
         </div>
     </div>
-    <audio id="audio" preload="auto"></audio>
+    <audio id="audio" preload="metadata"></audio>
     <script type="application/json" id="page-data"><?= json_encode($pageData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
     <script src="<?= url('assets/script/script.js') ?>"></script>
 </body>

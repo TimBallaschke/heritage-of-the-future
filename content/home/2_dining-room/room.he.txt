@@ -1,7 +1,7 @@
 Title: חדר אוכל
 ----
-Background_color: #bfbfbf
+Background_color: #928980
 ----
-Image_color: #fbff14
+Image_color: #98aea2
 ----
-Font_color: #000000
+Font_color: #ffffff

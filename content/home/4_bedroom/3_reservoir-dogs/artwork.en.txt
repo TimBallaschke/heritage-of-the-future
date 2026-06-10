@@ -1,0 +1,9 @@
+Title: Reservoir Dogs
+----
+Artist_name: Jeremie Hoffmann
+----
+Artwork_title: Reservoir Dogs
+----
+Audio:
+
+- reservoir-dogs-en.mp3

@@ -1,7 +1,7 @@
 Title: משרד
 ----
-Background_color: #203b31
+Background_color: #82a6c8
 ----
-Image_color: #f25377
+Image_color: #c7d49f
 ----
-Font_color: #aedffa
+Font_color: #874046

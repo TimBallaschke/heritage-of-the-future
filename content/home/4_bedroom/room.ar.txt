@@ -1,7 +1,7 @@
 Title: غرفة النوم
 ----
-Background_color: #cfbdd9
+Background_color: #edb8c5
 ----
-Image_color: #ffffff
+Image_color: #578d73
 ----
-Font_color: #ff006a
+Font_color: #3b3b3b

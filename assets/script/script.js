@@ -44,16 +44,19 @@ document.addEventListener('DOMContentLoaded', () => {
             uniform float u_intensity2;
             uniform float u_angle1;
             uniform float u_angle2;
+            uniform float u_anchorFrom;
+            uniform float u_anchorTo;
             uniform vec3 u_tint;
             varying vec2 v_uv;
 
-            vec2 coverUV(vec2 uv, vec2 imgSize, vec2 canvasSize) {
+            // Fit the image to the canvas HEIGHT (always fills vertically) and
+            // anchor it horizontally. anchor: 0.0 = left, 0.5 = center, 1.0 = right.
+            vec2 fillHeightUV(vec2 uv, vec2 imgSize, vec2 canvasSize, float anchor) {
                 float imgAspect = imgSize.x / imgSize.y;
                 float canvasAspect = canvasSize.x / canvasSize.y;
-                vec2 ratio = imgAspect > canvasAspect
-                    ? vec2(canvasAspect / imgAspect, 1.0)
-                    : vec2(1.0, imgAspect / canvasAspect);
-                return (uv - 0.5) * ratio + 0.5;
+                float ratioX = canvasAspect / imgAspect; // fraction of image width visible
+                float offset = (1.0 - ratioX) * anchor;
+                return vec2(uv.x * ratioX + offset, uv.y);
             }
 
             mat2 getRotM(float angle) {
@@ -95,8 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 vec2 pos1 = v_uv + getRotM(u_angle1) * dispVec * u_intensity1 * u_progress;
                 vec2 pos2 = v_uv + getRotM(u_angle2) * dispVec * u_intensity2 * (1.0 - u_progress);
 
-                pos1 = coverUV(pos1, u_fromSize, u_canvasSize);
-                pos2 = coverUV(pos2, u_toSize, u_canvasSize);
+                pos1 = fillHeightUV(pos1, u_fromSize, u_canvasSize, u_anchorFrom);
+                pos2 = fillHeightUV(pos2, u_toSize, u_canvasSize, u_anchorTo);
 
                 vec4 t1 = texture2D(u_from, pos1);
                 vec4 t2 = texture2D(u_to, pos2);
@@ -142,6 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
             intensity2: gl.getUniformLocation(program, 'u_intensity2'),
             angle1: gl.getUniformLocation(program, 'u_angle1'),
             angle2: gl.getUniformLocation(program, 'u_angle2'),
+            anchorFrom: gl.getUniformLocation(program, 'u_anchorFrom'),
+            anchorTo: gl.getUniformLocation(program, 'u_anchorTo'),
             tint: gl.getUniformLocation(program, 'u_tint'),
         };
         gl.uniform1i(u.from, 0);
@@ -165,6 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let fromImg = null;
         let toImg = null;
+        let fromAnchor = 0.5;
+        let toAnchor = 0.5;
 
         const loadImage = src => new Promise((resolve, reject) => {
             const img = new Image();
@@ -203,6 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
             gl.uniform1f(u.intensity2, 0.5);
             gl.uniform1f(u.angle1, Math.PI / 4);
             gl.uniform1f(u.angle2, -Math.PI / 4 * 3);
+            gl.uniform1f(u.anchorFrom, fromAnchor);
+            gl.uniform1f(u.anchorTo, toAnchor);
             gl.uniform2f(u.fromSize, fromImg ? fromImg.width : 1, fromImg ? fromImg.height : 1);
             gl.uniform2f(u.toSize, toImg ? toImg.width : 1, toImg ? toImg.height : 1);
             gl.uniform2f(u.canvasSize, canvas.width, canvas.height);
@@ -220,19 +229,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (fromImg) render(0);
         });
 
-        const transitionTo = (newSrc, duration = 1200) => {
+        const transitionTo = (newSrc, anchor = 0.5, duration = 1200) => {
             if (newSrc === currentSrc) return;
             currentSrc = newSrc;
             loadImage(newSrc).then(img => {
                 if (!fromImg) {
                     fromImg = img;
                     toImg = img;
+                    fromAnchor = anchor;
+                    toAnchor = anchor;
                     upload(texFrom, img);
                     upload(texTo, img);
                     render(0);
                     return;
                 }
                 toImg = img;
+                toAnchor = anchor;
                 upload(texTo, img);
                 if (animId) cancelAnimationFrame(animId);
                 const start = performance.now();
@@ -243,6 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         animId = requestAnimationFrame(step);
                     } else {
                         fromImg = toImg;
+                        fromAnchor = toAnchor;
                         upload(texFrom, toImg);
                         render(0);
                         animId = null;
@@ -405,19 +418,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!wrapperEl || !contentEl) return;
 
         wrapperEl.style.transition = `transform ${SCALE_DURATION}ms ease`;
-        wrapperEl.style.transform = 'scale(0.5)';
+        wrapperEl.style.transform = 'scale(0)';
 
         setTimeout(() => {
             contentEl.textContent = newContent;
 
             wrapperEl.style.transition = 'none';
-            wrapperEl.style.transform = 'scale(0.5)';
+            wrapperEl.style.transform = 'scale(0)';
 
             void wrapperEl.offsetHeight;
 
             wrapperEl.style.transition = `transform ${SCALE_DURATION}ms ease`;
             wrapperEl.style.transform = 'scale(1)';
         }, SCALE_DURATION);
+    };
+
+    // --- Per-artwork horizontal anchor for the background image ---
+    // The same image is reused across artworks, so we vary the anchor
+    // (left / center / right) deterministically from the artwork's slug to
+    // bring some diversity while staying consistent across reloads.
+    const ANCHORS = [0.0, 0.5, 1.0]; // left, center, right
+    const anchorForTrack = (track) => {
+        const key = String((track && (track.id ?? track.number)) || '');
+        let h = 0;
+        for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
+        return ANCHORS[h % ANCHORS.length];
     };
 
     // --- Translation + track navigation system ---
@@ -461,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (background && track.image) {
-            background.transitionTo(track.image);
+            background.transitionTo(track.image, anchorForTrack(track));
         }
 
         if (artworkNumberWrapperEl && artworkNumberEl && track.number !== undefined) {
@@ -493,6 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         syncUrl();
+        schedulePrefetch();
 
         setTimeout(() => { applying = false; }, 150);
     };
@@ -632,21 +658,34 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prevButton) prevButton.addEventListener('click', () => navigate('prev'));
     if (nextButton) nextButton.addEventListener('click', () => navigate('next'));
 
-    const prefetchAllAudio = () => {
-        if (!data || !data.rooms) return;
-        const urls = new Set();
-        data.rooms.forEach(room => {
-            room.tracks.forEach(track => {
-                Object.values(track.translations).forEach(t => {
-                    if (t.audioSrc) urls.add(t.audioSrc);
-                });
-            });
-        });
-        urls.forEach(url => {
-            const audio = new Audio();
-            audio.preload = 'auto';
-            audio.src = url;
-        });
+    // Lazy loading: the active track is loaded on demand by the main <audio>
+    // element (preload="metadata"; full data streams in on play). To keep
+    // stepping forward snappy, prefetch only the *next* track in the active
+    // language — one file ahead, not the whole catalogue.
+    const prefetched = new Set();
+    const prefetchNextAudio = () => {
+        if (!data || !data.rooms || data.rooms.length === 0) return;
+        let rIdx = activeRoomIndex;
+        let tIdx = activeTrackIndex + 1;
+        if (tIdx >= data.rooms[rIdx].tracks.length) {
+            rIdx = (rIdx + 1) % data.rooms.length;
+            tIdx = 0;
+        }
+        const track = data.rooms[rIdx] && data.rooms[rIdx].tracks[tIdx];
+        const t = track && track.translations[activeLang];
+        if (t && t.audioSrc && !prefetched.has(t.audioSrc)) {
+            prefetched.add(t.audioSrc);
+            const a = new Audio();
+            a.preload = 'auto';
+            a.src = t.audioSrc;
+        }
+    };
+
+    let prefetchTimer = null;
+    const schedulePrefetch = () => {
+        clearTimeout(prefetchTimer);
+        // defer so the active track / UI settle before fetching ahead
+        prefetchTimer = setTimeout(prefetchNextAudio, 1000);
     };
 
     const loadInlineData = () => {
@@ -676,7 +715,6 @@ document.addEventListener('DOMContentLoaded', () => {
         activeRoomIndex = inline.initialRoomIndex;
         applyRoomColors(data.rooms[activeRoomIndex]);
         apply(inline.initialTrackIndex, document.documentElement.lang || 'en');
-        prefetchAllAudio();
     }
 
     // --- Initial centering of default language (English) ---
