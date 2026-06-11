@@ -133,13 +133,10 @@ $initialFont    = $initialColors['font']       ?: '#ff5cc3';
     <div id="content">
         <div id="room-switcher-wrapper">
             <div id="room-switcher">
-                <?php foreach ($rooms as $r): ?>
-                    <div data-room="<?= esc($r['number']) ?>"><?= esc($r['translations'][$currentLang]['name'] ?? '') ?></div>
+                <?php foreach ($rooms as $roomIndex => $r): ?>
+                    <div class="<?= $roomIndex === $initialRoomIndex ? 'is-active' : '' ?>" data-room="<?= esc($r['number']) ?>"><?= esc($r['translations'][$currentLang]['name'] ?? '') ?></div>
                 <?php endforeach ?>
             </div>
-        </div>
-        <div id="room-selector-line-wrapper">
-            <div id="room-selector-line"></div>
         </div>
         <div id="artists-names-wrapper">
             <div id="artists-names"><?= $initialArtist ?></div>
@@ -170,13 +167,10 @@ $initialFont    = $initialColors['font']       ?: '#ff5cc3';
                         <div id="next-button"></div>
                     </div>
                 </div>
-                <div id="selector-line-wrapper">
-                    <div id="selector-line"></div>
-                </div>
                 <div id="language-switcher">
-                    <div id="language-switcher-arabic" data-lang="ar">عربي</div>
-                    <div id="language-switcher-english" data-lang="en">English</div>
-                    <div id="language-switcher-hebrew" data-lang="he">עִברִית</div>
+                    <div id="language-switcher-arabic" class="<?= $currentLang === 'ar' ? 'is-active' : '' ?>" data-lang="ar">عربي</div>
+                    <div id="language-switcher-english" class="<?= $currentLang === 'en' ? 'is-active' : '' ?>" data-lang="en">English</div>
+                    <div id="language-switcher-hebrew" class="<?= $currentLang === 'he' ? 'is-active' : '' ?>" data-lang="he">עִברִית</div>
                 </div>
             </div>
         </div>

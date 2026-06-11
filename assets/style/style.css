@@ -110,22 +110,6 @@ body {
   letter-spacing: -0.02em;
 }
 
-#selector-line-wrapper,
-#room-selector-line-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-}
-
-#selector-line,
-#room-selector-line {
-  width: 2px;
-  height: 30px;
-  background: currentColor;
-}
-
 #seekbar-time-wrapper {
   display: flex;
   flex-direction: column;
@@ -195,10 +179,6 @@ body {
   cursor: pointer;
 }
 
-#previous-button {
-  border-left: 2px solid currentColor;
-}
-
 #previous-button::before,
 #previous-button::after {
   content: "";
@@ -218,10 +198,6 @@ body {
 
 #previous-button::after {
   left: 23px;
-}
-
-#next-button {
-  border-right: 2px solid currentColor;
 }
 
 #next-button::before,
@@ -293,30 +269,40 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   direction: ltr;
-  gap: 10rem;
   margin-inline: -4rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  touch-action: pan-x;
-  font-size: 5rem;
+  padding-inline: 4rem;
+  gap: 4rem;
+  overflow: visible;
+  touch-action: manipulation;
+  font-size: 4.6rem;
   line-height: var(--small-type-line-height);
   letter-spacing: -0.02em;
   font-weight: 400;
   padding-bottom: 0.08em;
   margin-bottom: -0.08em;
 }
-#language-switcher::before, #language-switcher::after,
-#room-switcher::before,
-#room-switcher::after {
-  content: "";
-  flex: 0 0 50%;
-}
 #language-switcher > div,
 #room-switcher > div {
-  flex: 0 0 auto;
-  scroll-snap-align: center;
+  position: relative;
+  flex: 0 1 auto;
+  min-width: 0;
+  padding-bottom: 1.6rem;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+}
+#language-switcher > div.is-active::after,
+#room-switcher > div.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: currentColor;
+  pointer-events: none;
 }
 
 #language-switcher > [data-lang=en] {
@@ -331,8 +317,13 @@ body {
   line-height: 1.2;
 }
 
+#language-switcher {
+  margin-top: 50px;
+}
+
 #room-switcher-wrapper {
   flex: 0 0 auto;
+  margin-bottom: 50px;
 }
 
 #artwork-number-wrapper {

@@ -37,11 +37,13 @@ fields:
   artist_name:
     label: Artist name
     type: text
+    help: Use `<br>` to add a line break.
     required: true
 
   artwork_title:
     label: Artwork title
     type: text
+    help: Use `<br>` to add a line break.
     required: true
 
   audio:

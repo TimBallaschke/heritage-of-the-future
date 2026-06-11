@@ -114,22 +114,6 @@ body {
     letter-spacing: $letter-spacing-1;
 }
 
-#selector-line-wrapper,
-#room-selector-line-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-}
-
-#selector-line,
-#room-selector-line {
-    width: 2px;
-    height: 30px;
-    background: currentColor;
-}
-
 #seekbar-time-wrapper {
     display: flex;
     flex-direction: column;
@@ -201,10 +185,6 @@ body {
     cursor: pointer;
 }
 
-#previous-button {
-    border-left: 2px solid currentColor;
-}
-
 #previous-button::before,
 #previous-button::after {
     content: '';
@@ -224,10 +204,6 @@ body {
 
 #previous-button::after {
     left: 23px;
-}
-
-#next-button {
-    border-right: 2px solid currentColor;
 }
 
 #next-button::before,
@@ -304,13 +280,13 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     direction: ltr;
-    gap: 10rem;
     margin-inline: -4rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    touch-action: pan-x;
+    padding-inline: 4rem;
+    gap: 4rem;
+    overflow: visible;
+    touch-action: manipulation;
     font-size: $font-size-switcher;
     line-height: var(--small-type-line-height);
     letter-spacing: $letter-spacing-2;
@@ -318,15 +294,27 @@ body {
     padding-bottom: $small-type-descender-room;
     margin-bottom: -$small-type-descender-room;
 
-    &::before,
-    &::after {
-        content: '';
-        flex: 0 0 50%;
+    > div {
+        position: relative;
+        flex: 0 1 auto;
+        min-width: 0;
+        padding-bottom: 1.6rem;
+        cursor: pointer;
+        text-align: center;
+        white-space: nowrap;
     }
 
-    > div {
-        flex: 0 0 auto;
-        scroll-snap-align: center;
+    > div.is-active {
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 2px;
+            background: currentColor;
+            pointer-events: none;
+        }
     }
 }
 
@@ -342,8 +330,13 @@ body {
     line-height: $small-type-line-height-ar;
 }
 
+#language-switcher {
+    margin-top: 50px;
+}
+
 #room-switcher-wrapper {
     flex: 0 0 auto;
+    margin-bottom: 50px;
 }
 
 #artwork-number-wrapper {

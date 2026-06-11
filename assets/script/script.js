@@ -290,10 +290,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentTimeEl = document.getElementById('seekbar-time-current');
     const totalTimeEl = document.getElementById('seekbar-time-total');
 
-    // --- Click-to-center on language items ---
+    // --- Language switching ---
     document.querySelectorAll('#language-switcher > [data-lang]').forEach(item => {
         item.addEventListener('click', () => {
-            item.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
             if (data) apply(activeTrackIndex, item.dataset.lang);
         });
     });
@@ -465,12 +464,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const updateSwitcherState = () => {
+        if (switcher) {
+            switcher.querySelectorAll('[data-lang]').forEach(item => {
+                item.classList.toggle('is-active', item.dataset.lang === activeLang);
+            });
+        }
+
+        if (roomSwitcher && data && Array.isArray(data.rooms)) {
+            const activeRoom = data.rooms[activeRoomIndex];
+            roomSwitcher.querySelectorAll('[data-room]').forEach(item => {
+                item.classList.toggle('is-active', !!activeRoom && item.dataset.room === String(activeRoom.number));
+            });
+        }
+    };
+
     const apply = (trackIndex, lang, direction = 'next') => {
         if (!data || !data.languages[lang] || !data.tracks[trackIndex]) return;
         const track = data.tracks[trackIndex];
         const t = track.translations[lang];
         if (!t) return;
         if (lang === activeLang && trackIndex === activeTrackIndex) {
+            updateSwitcherState();
             syncUrl();
             return;
         }
@@ -514,42 +529,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const activeItem = switcher && switcher.querySelector(`[data-lang="${lang}"]`);
-        if (activeItem) {
-            activeItem.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
-        }
-
+        updateSwitcherState();
         syncUrl();
         schedulePrefetch();
 
         setTimeout(() => { applying = false; }, 150);
     };
-
-    const detectCenteredLanguage = () => {
-        if (!switcher || applying) return;
-        const switcherRect = switcher.getBoundingClientRect();
-        const centerX = switcherRect.left + switcherRect.width / 2;
-        let closest = null;
-        let closestDist = Infinity;
-        switcher.querySelectorAll('[data-lang]').forEach(item => {
-            const r = item.getBoundingClientRect();
-            const dist = Math.abs(r.left + r.width / 2 - centerX);
-            if (dist < closestDist) {
-                closest = item;
-                closestDist = dist;
-            }
-        });
-        if (closest) apply(activeTrackIndex, closest.dataset.lang);
-    };
-
-    if (switcher) {
-        let scrollTimer = null;
-        switcher.addEventListener('scroll', () => {
-            if (applying) return;
-            clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(detectCenteredLanguage, 150);
-        });
-    }
 
     // --- Room switching ---
     const applyRoomColors = (room) => {
@@ -565,24 +550,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Switch the active room. Re-points data.tracks at the new room and
     // forces apply() to re-render (by invalidating activeTrackIndex).
     // Returns true if the active room actually changed.
-    const setRoom = (newRoomIdx, opts = {}) => {
+    const setRoom = (newRoomIdx) => {
         if (!data || !data.rooms || !data.rooms[newRoomIdx]) return false;
         if (newRoomIdx === activeRoomIndex) return false;
         activeRoomIndex = newRoomIdx;
         data.tracks = data.rooms[newRoomIdx].tracks;
         activeTrackIndex = -1; // ensure subsequent apply() does not early-return
         applyRoomColors(data.rooms[newRoomIdx]);
-        if (roomSwitcher && opts.scroll !== false) {
-            const roomNum = data.rooms[newRoomIdx].number;
-            const item = roomSwitcher.querySelector(`[data-room="${roomNum}"]`);
-            if (item) {
-                item.scrollIntoView({
-                    behavior: opts.behavior || 'smooth',
-                    inline: 'center',
-                    block: 'nearest',
-                });
-            }
-        }
+        updateSwitcherState();
         return true;
     };
 
@@ -597,39 +572,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 setRoom(idx);
                 apply(0, activeLang);
             });
-        });
-    }
-
-    // Scroll/swipe detection for the room switcher
-    const detectCenteredRoom = () => {
-        if (!roomSwitcher || applying || !data) return;
-        const rect = roomSwitcher.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        let closest = null;
-        let closestDist = Infinity;
-        roomSwitcher.querySelectorAll('[data-room]').forEach(item => {
-            const r = item.getBoundingClientRect();
-            const dist = Math.abs(r.left + r.width / 2 - centerX);
-            if (dist < closestDist) {
-                closest = item;
-                closestDist = dist;
-            }
-        });
-        if (!closest) return;
-        const roomNum = parseInt(closest.dataset.room, 10);
-        const idx = data.rooms.findIndex(r => r.number === roomNum);
-        if (idx >= 0 && idx !== activeRoomIndex) {
-            setRoom(idx, { scroll: false }); // already centered by the scroll
-            apply(0, activeLang);
-        }
-    };
-
-    if (roomSwitcher) {
-        let roomScrollTimer = null;
-        roomSwitcher.addEventListener('scroll', () => {
-            if (applying) return;
-            clearTimeout(roomScrollTimer);
-            roomScrollTimer = setTimeout(detectCenteredRoom, 150);
         });
     }
 
@@ -719,28 +661,5 @@ document.addEventListener('DOMContentLoaded', () => {
         apply(inline.initialTrackIndex, document.documentElement.lang || 'en');
     }
 
-    // --- Initial centering of default language (English) ---
-    const defaultLang = document.getElementById('language-switcher-english');
-    if (defaultLang) {
-        const centerDefault = () => {
-            defaultLang.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
-        };
-        centerDefault();
-        if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(centerDefault);
-        }
-    }
-
-    // --- Initial centering of the active room ---
-    if (roomSwitcher && data && data.rooms[activeRoomIndex]) {
-        const roomNum = data.rooms[activeRoomIndex].number;
-        const item = roomSwitcher.querySelector(`[data-room="${roomNum}"]`);
-        if (item) {
-            const centerRoom = () => item.scrollIntoView({ behavior: 'instant', inline: 'center', block: 'nearest' });
-            centerRoom();
-            if (document.fonts && document.fonts.ready) {
-                document.fonts.ready.then(centerRoom);
-            }
-        }
-    }
+    updateSwitcherState();
 });
