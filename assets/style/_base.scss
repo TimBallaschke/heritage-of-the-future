@@ -67,20 +67,29 @@ body {
     position: relative;
 }
 
+#artwork-info-wrapper {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    padding-bottom: 8rem;
+}
+
 #artists-names-wrapper {
     flex: 0 0 auto;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    gap: 4rem;
+    justify-content: center;
     font-size: $font-size-2;
     line-height: var(--small-type-line-height);
     letter-spacing: $letter-spacing-1;
     color: inherit;
+    text-align: center;
 }
 
 #artists-names {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-width: 0; // allow the name to wrap instead of overflowing into the number
     overflow-wrap: break-word;
 }
@@ -99,7 +108,7 @@ body {
 }
 
 #artwork-name-wrapper {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -341,6 +350,8 @@ body {
 
 #artwork-number-wrapper {
     flex: 0 0 auto; // fixed size; never shrinks, so the name can't push into it
+    align-self: center;
+    justify-self: center;
     display: flex;
     align-items: center;
     justify-content: center;
