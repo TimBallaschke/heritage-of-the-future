@@ -11,6 +11,13 @@ $homePage          = $homePage          ?? site()->homePage();
 $initialRoomIndex  = $initialRoomIndex  ?? 0;
 $initialTrackIndex = $initialTrackIndex ?? 0;
 
+$formatTitleText = function ($value): string {
+    $text = preg_replace('/<br\s*\/?>/i', "\n", (string)$value) ?? '';
+    $text = esc($text);
+
+    return str_replace(["\r\n", "\r", "\n"], '<br>', $text);
+};
+
 $backgroundImagesDir = kirby()->root('index') . '/assets/images';
 $backgroundImages = [];
 
@@ -58,8 +65,8 @@ foreach ($homePage->children()->listed() as $room) {
             $c = $artwork->content($lang->code());
             $audioFile = $c->audio()->toFile();
             $artTrans[$lang->code()] = [
-                'artistName'  => (string)$c->artist_name(),
-                'artworkName' => (string)$c->artwork_title(),
+                'artistName'  => $formatTitleText($c->artist_name()),
+                'artworkName' => $formatTitleText($c->artwork_title()),
                 'audioSrc'    => $audioFile ? $audioFile->url() : '',
             ];
         }
