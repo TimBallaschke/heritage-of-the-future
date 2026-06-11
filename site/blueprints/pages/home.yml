@@ -1,10 +1,27 @@
 title: Home
 
+buttons:
+  - languages
+
+options:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  changeTitle: false
+  delete: false
+  duplicate: false
+  move: false
+  preview: false
+  sort: false
+
 sections:
   rooms:
     type: pages
     label: Rooms
     template: room
+    batch: false
     create: false
     info: "{{ page.children.listed.count }} artworks"
+    search: false
     sortBy: num asc
+    sortable: false

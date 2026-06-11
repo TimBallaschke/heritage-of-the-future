@@ -5,11 +5,28 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 1vw;
+    --large-type-line-height: #{$large-type-line-height-en};
+    --small-type-line-height: #{$small-type-line-height-en};
     overscroll-behavior: none;
     height: 100dvh;
     overflow: hidden;
     touch-action: none;
     background-color: var(--room-bg, #dedddc);
+}
+
+html:lang(en) {
+    --large-type-line-height: #{$large-type-line-height-en};
+    --small-type-line-height: #{$small-type-line-height-en};
+}
+
+html:lang(he) {
+    --large-type-line-height: #{$large-type-line-height-he};
+    --small-type-line-height: #{$small-type-line-height-he};
+}
+
+html:lang(ar) {
+    --large-type-line-height: #{$large-type-line-height-ar};
+    --small-type-line-height: #{$small-type-line-height-ar};
 }
 
 *, *:before, *:after {
@@ -57,7 +74,7 @@ body {
     align-items: center;
     gap: 4rem;
     font-size: $font-size-2;
-    line-height: $line-height-1;
+    line-height: var(--small-type-line-height);
     letter-spacing: $letter-spacing-1;
     color: inherit;
 }
@@ -93,7 +110,7 @@ body {
 #artwork-name {
     text-align: center;
     font-size: $font-size-1;
-    line-height: $line-height-1;
+    line-height: var(--large-type-line-height);
     letter-spacing: $letter-spacing-1;
 }
 
@@ -160,7 +177,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     font-size: $font-size-2;
-    line-height: $line-height-2;
+    line-height: var(--small-type-line-height);
     letter-spacing: $letter-spacing-2;
     font-weight: $font-weight-2;
     padding-top: 10px;
@@ -295,9 +312,11 @@ body {
     scroll-behavior: smooth;
     touch-action: pan-x;
     font-size: $font-size-2;
-    line-height: $line-height-2;
+    line-height: var(--small-type-line-height);
     letter-spacing: $letter-spacing-2;
     font-weight: $font-weight-2;
+    padding-bottom: $small-type-descender-room;
+    margin-bottom: -$small-type-descender-room;
 
     &::before,
     &::after {
@@ -309,6 +328,18 @@ body {
         flex: 0 0 auto;
         scroll-snap-align: center;
     }
+}
+
+#language-switcher > [data-lang="en"] {
+    line-height: $small-type-line-height-en;
+}
+
+#language-switcher > [data-lang="he"] {
+    line-height: $small-type-line-height-he;
+}
+
+#language-switcher > [data-lang="ar"] {
+    line-height: $small-type-line-height-ar;
 }
 
 #room-switcher-wrapper {
@@ -364,5 +395,3 @@ body {
         }
     }
 }
-
-

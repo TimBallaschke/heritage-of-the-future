@@ -11,6 +11,23 @@ $homePage          = $homePage          ?? site()->homePage();
 $initialRoomIndex  = $initialRoomIndex  ?? 0;
 $initialTrackIndex = $initialTrackIndex ?? 0;
 
+$backgroundImagesDir = kirby()->root('index') . '/assets/images';
+$backgroundImages = [];
+
+if (is_dir($backgroundImagesDir) === true) {
+    $backgroundImageFiles = array_values(array_filter(scandir($backgroundImagesDir) ?: [], function ($file) use ($backgroundImagesDir) {
+        return is_file($backgroundImagesDir . '/' . $file) === true && preg_match('/\.png$/i', $file) === 1;
+    }));
+    sort($backgroundImageFiles, SORT_NATURAL | SORT_FLAG_CASE);
+
+    foreach ($backgroundImageFiles as $file) {
+        $backgroundImages[] = url('assets/images/' . $file);
+    }
+}
+
+$backgroundImageCount = count($backgroundImages);
+$backgroundImageIndex = 0;
+
 $languages = [];
 foreach (kirby()->languages() as $lang) {
     $languages[$lang->code()] = [
@@ -46,12 +63,14 @@ foreach ($homePage->children()->listed() as $room) {
                 'audioSrc'    => $audioFile ? $audioFile->url() : '',
             ];
         }
+        $imageIndex = $backgroundImageIndex++;
         $tracks[] = [
             'id'           => $artwork->slug(),
             'number'       => (int)$artwork->num(),
-            // Background image is set up in code by convention, not via the panel:
-            // each artwork maps to assets/images/<slug>.png
-            'image'        => url('assets/images/' . $artwork->slug() . '.png'),
+            // Background images cycle through the available PNGs in assets/images;
+            // artworks no longer need a matching image filename.
+            'image'        => $backgroundImageCount > 0 ? $backgroundImages[$imageIndex % $backgroundImageCount] : '',
+            'imageIndex'   => $imageIndex,
             'translations' => $artTrans,
         ];
     }

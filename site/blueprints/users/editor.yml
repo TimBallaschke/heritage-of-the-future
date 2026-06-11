@@ -1,0 +1,63 @@
+title: Editor
+
+home: "{{ site.find('home').panel.url }}"
+
+permissions:
+  access:
+    account: true
+    languages: false
+    panel: true
+    site: true
+    system: false
+    users: false
+
+  files:
+    access: true
+    changeName: false
+    changeTemplate: false
+    create: true
+    delete: true
+    list: true
+    read: true
+    replace: true
+    sort: false
+    update: true
+
+  languages:
+    create: false
+    delete: true
+    update: false
+
+  pages:
+    access: true
+    changeSlug: false
+    changeStatus: false
+    changeTemplate: false
+    changeTitle: false
+    create: true
+    delete: false
+    duplicate: false
+    list: true
+    move: false
+    preview: false
+    read: true
+    sort: true
+    update: true
+
+  site:
+    access: true
+    changeTitle: false
+    update: false
+
+  user:
+    access: true
+    changeEmail: true
+    changeLanguage: true
+    changeName: true
+    changePassword: true
+    changeRole: false
+    delete: false
+    list: false
+    update: true
+
+  users: false

@@ -6,5 +6,8 @@ return [
     'direction' => 'ltr',
     'locale'    => 'en_US',
     'name'      => 'English',
+    'translations' => [
+        'page.create' => 'Create',
+    ],
     'url'       => '/en',
 ];

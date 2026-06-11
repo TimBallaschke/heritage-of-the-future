@@ -1,5 +1,21 @@
 title: Room
 
+buttons:
+  - languages
+
+options:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  changeTitle: false
+  create: true
+  delete: false
+  duplicate: false
+  move: false
+  preview: false
+  sort: false
+  update: true
+
 columns:
   - width: 1/3
     fields:
@@ -20,5 +36,11 @@ columns:
       artworks:
         type: pages
         label: Artworks
+        batch: true
+        create: artwork
+        search: false
+        status: listed
         template: artwork
+        text: "{{ page.artwork_title.or(page.title) }}"
         info: "#{{ page.num }} — {{ page.artist_name }}"
+        sortable: true

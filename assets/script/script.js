@@ -434,11 +434,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Per-artwork horizontal anchor for the background image ---
-    // The same image is reused across artworks, so we vary the anchor
-    // (left / center / right) deterministically from the artwork's slug to
-    // bring some diversity while staying consistent across reloads.
-    const ANCHORS = [0.0, 0.5, 1.0]; // left, center, right
+    // Background images cycle independently from artworks. Vary the anchor
+    // deterministically so reused images do not always sit in the same place.
+    const ANCHORS = [0.5, 1.0, 0.0]; // center, right, left
     const anchorForTrack = (track) => {
+        if (track && Number.isInteger(track.imageIndex)) {
+            return ANCHORS[track.imageIndex % ANCHORS.length];
+        }
         const key = String((track && (track.id ?? track.number)) || '');
         let h = 0;
         for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;

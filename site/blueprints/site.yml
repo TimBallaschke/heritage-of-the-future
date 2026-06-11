@@ -1,5 +1,11 @@
 title: Site
 
+buttons: false
+
+options:
+  changeTitle: false
+  update: false
+
 sections:
   pages:
     type: pages

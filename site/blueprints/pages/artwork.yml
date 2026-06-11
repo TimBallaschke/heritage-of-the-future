@@ -1,19 +1,48 @@
 title: Artwork
 
-# Auto-generate the slug from the title so the user doesn't have to enter a
-# "URL appendix" when creating an artwork. Setting create.slug to a string
-# hides the slug field from the create dialog (Kirby derives it from the title).
+buttons:
+  - languages
+
+num: default
+
+options:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  changeTitle: false
+  delete: true
+  duplicate: false
+  move: false
+  preview: false
+  sort: true
+  update: true
+
+status:
+  draft: false
+  unlisted: false
+  listed:
+    label: Published
+
+# Create artworks from the two content fields only. Kirby derives the page title
+# and slug from the artwork title and immediately lists the new page.
 create:
-  slug: "{{ page.title.slug }}"
+  title: "{{ page.artwork_title }}"
+  slug: "{{ page.artwork_title.slug }}"
+  status: listed
+  fields:
+    - artist_name
+    - artwork_title
 
 fields:
   artist_name:
     label: Artist name
     type: text
+    required: true
 
   artwork_title:
     label: Artwork title
     type: text
+    required: true
 
   audio:
     label: Audio
