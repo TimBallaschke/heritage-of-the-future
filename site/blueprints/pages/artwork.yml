@@ -9,7 +9,7 @@ options:
   changeSlug: false
   changeStatus: false
   changeTemplate: false
-  changeTitle: false
+  changeTitle: true
   delete: true
   duplicate: false
   move: false
@@ -23,11 +23,10 @@ status:
   listed:
     label: Published
 
-# Create artworks from the two content fields only. Kirby derives the page title
-# and slug from the artwork title and immediately lists the new page.
+# Create artworks from the two content fields and a manually entered URL.
+# Kirby derives the page title from the artwork title and immediately lists the new page.
 create:
   title: "{{ page.artwork_title }}"
-  slug: "{{ page.artwork_title.slug }}"
   status: listed
   fields:
     - artist_name
@@ -45,6 +44,11 @@ fields:
     type: text
     help: Use `<br>` to add a line break.
     required: true
+
+  page_url:
+    label: URL
+    type: info
+    text: "{{ page.url }}"
 
   audio:
     label: Audio

@@ -355,11 +355,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20rem;
-    height: 20rem;
+    width: 22rem;
+    height: 22rem;
     border: 2px solid currentColor;
     border-radius: 50%;
     font-size: $font-size-3;
+}
+
+#artwork-number {
+    transform: translateY(-0.04em);
 }
 
 // --- Mobile-only experience ---

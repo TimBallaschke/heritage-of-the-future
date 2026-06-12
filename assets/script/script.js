@@ -297,21 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Audio playback ---
-    if (playButton && audio) {
-        playButton.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
-        });
-
-        audio.addEventListener('play', () => playButton.classList.add('playing'));
-        audio.addEventListener('pause', () => playButton.classList.remove('playing'));
-        audio.addEventListener('ended', () => playButton.classList.remove('playing'));
-    }
-
     // --- Time display and progress fill ---
     const formatTime = seconds => {
         if (!isFinite(seconds)) return '0:00';
@@ -330,21 +315,73 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const updateProgressUI = () => {
+        if (!audio) return;
+        if (currentTimeEl) currentTimeEl.textContent = formatTime(audio.currentTime);
+        updateProgressFill();
+    };
+
+    let progressAnimationFrame = null;
+
+    const stopProgressAnimation = () => {
+        if (progressAnimationFrame === null) return;
+        cancelAnimationFrame(progressAnimationFrame);
+        progressAnimationFrame = null;
+    };
+
+    const animateProgress = () => {
+        updateProgressUI();
+
+        if (audio && !audio.paused && !audio.ended) {
+            progressAnimationFrame = requestAnimationFrame(animateProgress);
+        } else {
+            progressAnimationFrame = null;
+        }
+    };
+
+    const startProgressAnimation = () => {
+        if (progressAnimationFrame !== null) return;
+        progressAnimationFrame = requestAnimationFrame(animateProgress);
+    };
+
+    // --- Audio playback ---
+    if (playButton && audio) {
+        playButton.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().catch(() => {
+                    playButton.classList.remove('playing');
+                    stopProgressAnimation();
+                });
+            } else {
+                audio.pause();
+            }
+        });
+
+        audio.addEventListener('play', () => {
+            playButton.classList.add('playing');
+            startProgressAnimation();
+        });
+        audio.addEventListener('pause', () => {
+            playButton.classList.remove('playing');
+            stopProgressAnimation();
+            updateProgressUI();
+        });
+        audio.addEventListener('ended', () => {
+            playButton.classList.remove('playing');
+            stopProgressAnimation();
+            updateProgressUI();
+        });
+    }
+
     if (audio) {
         audio.addEventListener('loadedmetadata', () => {
             if (totalTimeEl) totalTimeEl.textContent = formatTime(audio.duration);
-            updateProgressFill();
+            updateProgressUI();
         });
 
-        audio.addEventListener('timeupdate', () => {
-            if (currentTimeEl) currentTimeEl.textContent = formatTime(audio.currentTime);
-            updateProgressFill();
-        });
+        audio.addEventListener('timeupdate', updateProgressUI);
 
-        audio.addEventListener('seeked', () => {
-            if (currentTimeEl) currentTimeEl.textContent = formatTime(audio.currentTime);
-            updateProgressFill();
-        });
+        audio.addEventListener('seeked', updateProgressUI);
     }
 
     // --- Seekbar interaction (click/drag) ---
